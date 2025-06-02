@@ -1,8 +1,8 @@
-package com..demo.repository;
+package com.tugas_besar.segor.repository;
 
-import com.example.demo.entity.User;
+import com.tugas_besar.segor.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByEmail(String email);
+public interface UserRepository extends JpaRepository<Users, Long> {
+    Users findByNama(String nama);
 }
