@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>GOR List</title>
+</head>
+
+<body>
+    <h2>List of GOR</h2>
+    <a th:href="@{/gor/create}">Create New GOR</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nama</th>
+                <th>Alamat</th>
+                <th>Img</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="gor : ${gors}">
+                <td th:text="${gor.id}"></td>
+                <td th:text="${gor.nama}"></td>
+                <td th:text="${gor.alamat}"></td>
+                <td>
+                    <img th:src="@{${gor.img}}" alt="GOR Image" width="100" />
+                </td>
+                <td>
+                    <a th:href="@{'/gor/edit/' + ${gor.id}}">Edit</a>
+                    <form th:action="@{'/gor/delete/' + ${gor.id}}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

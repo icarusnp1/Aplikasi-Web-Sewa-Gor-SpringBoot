@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SegorApplication<segor>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.tugas_besar.segor.SegorApplication",
+            "projectName": "segor",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
