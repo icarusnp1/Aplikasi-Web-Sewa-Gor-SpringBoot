@@ -20,8 +20,8 @@ public class GorEntity {
     @Column(length = 255, nullable = false)
     private String alamat;
 
-    @Column(length = 255)
-    private String img;
+    @Column(name = "img", columnDefinition = "BLOB")
+    private byte[] img;
 
     // Getters and Setters
     public Integer getId() { return id; }
@@ -33,6 +33,6 @@ public class GorEntity {
     public String getAlamat() { return alamat; }
     public void setAlamat(String alamat) { this.alamat = alamat; }
 
-    public String getImg() { return img; }
-    public void setImg(String img) { this.img = img; }
+    public byte[] getImg() { return img; }
+    public void setImg(byte[] img) { this.img = img; }
 }

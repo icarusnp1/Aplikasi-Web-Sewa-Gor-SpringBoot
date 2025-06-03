@@ -2,6 +2,7 @@ package com.tugas_besar.segor.controllers;
 
 import com.tugas_besar.segor.entity.Users;
 import com.tugas_besar.segor.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,14 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String doLogin(@RequestParam("nama") String nama, @RequestParam("password") String password, Model model) {
-        if (service.login(nama, password)) {
+    public String doLogin(@RequestParam("nama") String nama,
+                          @RequestParam("password") String password,
+                          Model model,
+                          HttpSession session) {
+        Users user = service.findByNamaAndPassword(nama, password);
+        if (user != null) {
+            session.setAttribute("user", user);
+            session.setAttribute("role", user.getRole());
             return "redirect:/home";
         } else {
             model.addAttribute("error", "Email atau password salah!");
@@ -42,12 +49,23 @@ public class AuthController {
     }
 
     @GetMapping("/home")
-    public String home() {
+    public String home(HttpSession session, Model model) {
+        Users user = (Users) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("user", user);
         return "home";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
     }
 
     @GetMapping("/")
     public String root() {
-        return "redirect:/home"; // atau "redirect:/login" jika ingin ke login
+        return "redirect:/home";
     }
 }

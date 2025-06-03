@@ -16,8 +16,11 @@ public class UserService {
         return repo.save(user);
     }
 
-    public boolean login(String nama, String password) {
+    public Users findByNamaAndPassword(String nama, String password) {
         Users user = repo.findByNama(nama);
-        return user != null && user.getPassword().equals(password);
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
     }
 }

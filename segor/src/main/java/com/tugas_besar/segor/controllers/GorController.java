@@ -3,16 +3,13 @@ package com.tugas_besar.segor.controllers;
 import com.tugas_besar.segor.entity.GorEntity;
 import com.tugas_besar.segor.service.GorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.List;
 import java.util.Optional;
@@ -48,14 +45,7 @@ public class GorController {
             if (fileName != null
                     && (fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg"))) {
                 try {
-                    // Save to src/main/resources/static/images/
-                    String uploadDir = "src/main/resources/static/images/";
-                    File dir = new File(uploadDir);
-                    if (!dir.exists())
-                        dir.mkdirs();
-                    Path filePath = Paths.get(uploadDir, fileName);
-                    Files.write(filePath, imgFile.getBytes());
-                    gor.setImg("/images/" + fileName); // Save relative path
+                    gor.setImg(imgFile.getBytes());             
                 } catch (IOException e) {
                     e.printStackTrace();
                     // Optionally, add error handling here
@@ -92,5 +82,25 @@ public class GorController {
     public String deleteGor(@PathVariable Integer id) {
         gorService.deleteGor(id);
         return "redirect:/gor/list";
+    }
+
+    @GetMapping("/img/{id}")
+    public ResponseEntity<byte[]> getGorImage(@PathVariable Integer id) {
+        Optional<GorEntity> gor = gorService.getGorById(id);
+        if (gor.isPresent()) {
+            byte[] img = gor.get().getImg();
+            if (img != null && img.length > 0) {
+                System.out.println("Serving image for GOR id=" + id + ", size=" + img.length);
+                return ResponseEntity.ok()
+                    .header("Content-Type", "image/jpeg")
+                    .body(img);
+            } else {
+                System.out.println("No image found for GOR id=" + id);
+                return ResponseEntity.notFound().build();
+            }
+        } else {
+            System.out.println("No GOR found with id=" + id);
+            return ResponseEntity.notFound().build();
+        }
     }
 }

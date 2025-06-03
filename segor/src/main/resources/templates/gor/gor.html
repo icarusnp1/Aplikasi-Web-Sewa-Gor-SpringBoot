@@ -23,9 +23,9 @@
                 <td th:text="${gor.id}"></td>
                 <td th:text="${gor.nama}"></td>
                 <td th:text="${gor.alamat}"></td>
-                <td>
-                    <img th:src="@{${gor.img}}" alt="GOR Image" width="100" />
-                </td>
+               <td>
+                <img th:src="@{'/gor/img/' + ${gor.id}}" alt="GOR Image" width="100" />
+            </td>
                 <td>
                     <a th:href="@{'/gor/edit/' + ${gor.id}}">Edit</a>
                     <form th:action="@{'/gor/delete/' + ${gor.id}}" method="post" style="display:inline;">

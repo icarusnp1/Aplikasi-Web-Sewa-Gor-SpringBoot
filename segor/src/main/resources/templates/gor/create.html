@@ -8,12 +8,12 @@
 <body>
     <h2>Create New GOR</h2>
     <form th:action="@{/gor/save}" th:object="${gor}" method="post" enctype="multipart/form-data">
-        <label>Nama:</label>
-        <input type="text" th:field="*{nama}" required /><br />
-        <label>Alamat:</label>
-        <input type="text" th:field="*{alamat}" required /><br />
-        <label>Img:</label>
-        <input type="file" name="imgFile" accept=".png,.jpg,.jpeg" required /><br />
+        <form th:action="@{/gor/save}" method="post" enctype="multipart/form-data" th:object="${gor}">
+        Nama: <input type="text" th:field="*{nama}" /><br/>
+        Alamat: <input type="text" th:field="*{alamat}" /><br/>
+        Gambar: <input type="file" name="imgFile" accept="image/*" /><br/>
+    <button type="submit">Simpan</button>
+</form>
         <button type="submit">Create</button>
     </form>
     <a th:href="@{/gor/list}">Back to List</a>
