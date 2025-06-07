@@ -1,0 +1,184 @@
+/* Color Palette Variables */
+:root {
+    --primary-light: #8288F8;   /* Soft Blue */
+    --primary-dark:  #18126C;   /* Deep Blue */
+    --black:         #000200;   /* Almost Black */
+    --background:    #E0DFFF;   /* Pale Lavender */
+    --navy-dark:     #07052C;   /* Navy Night */
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: white;
+    color: var(--black);
+    margin: 0;
+    padding: 0;
+}
+
+.body-gor {
+    margin-left: 64px;
+    margin-right: 64px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--background);
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.19);
+    border: 1px solid var(--background);
+    border-radius: 16px;
+}
+
+.table thead {
+    background-color: var(--primary-dark);
+    color: white;
+}
+
+.table th, .table td {
+    text-align: left;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f6f7ff;
+}
+
+.table tr {
+    background-color: white;
+    border-radius: 16px;
+    border-left: 8px solid white;
+    transition: border-color 0.3s;
+}
+
+.table tr:hover {
+    border-color: var(--primary-dark);
+}
+
+.table td {
+    padding: 12px;
+}
+
+.table th {
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.table-title {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: var(--primary-dark);
+    font-weight: bold;
+}
+
+.table-actions {
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.gor-img {
+    max-width: 300px;
+    max-height: 200px;
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-left: 16px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.row-img {
+    justify-items: center;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.button {
+    padding: 8px 20px;
+    background-color: var(--primary-dark);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: background 0.2s, color 0.2s;
+    font-family: inherit;
+    border-radius: 6px;
+    decoration: none;
+    text-decoration: none;
+}
+
+.button-edit {
+    padding: 8px 20px;
+    background-color: var(--primary-light);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: background 0.2s, color 0.2s;
+    font-family: inherit;
+    border-radius: 6px;
+    decoration: none;
+    text-decoration: none;
+}
+
+.button-edit:hover {
+    background-color: var(--primary-dark);
+    color: white;
+}
+
+.button-detail {
+    background-color: var(--background);
+    color: var(--primary-dark);
+    border: 1px solid var(--primary-dark);
+}
+
+.button-detail:hover {
+    background-color: var(--primary-light);
+    color: white;
+}
+
+.button-delete {
+    background-color: #ff4d4f;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: background 0.2s, color 0.2s;
+    font-family: inherit;
+    border-radius: 6px;
+    decoration: none;
+    text-decoration: none;
+}
+
+.button-delete:hover {
+    background-color: #c82333;
+    color: white;
+}
+
+.test {
+    border: 1px solid var(--primary-dark);
+    border-radius: 8px;
+}

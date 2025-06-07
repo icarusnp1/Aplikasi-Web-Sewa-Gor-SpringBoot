@@ -3,34 +3,34 @@
 
 <head>
     <title>GOR List</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 
-<body>
+<body class="body-gor">
     <h2>List of GOR</h2>
-    <a th:href="@{/gor/create}">Create New GOR</a>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nama</th>
-                <th>Alamat</th>
-                <th>Img</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
+    <a th:href="@{/gor/create}" class="button">Tambah GOR</a>
+    
+    <table class="table">
         <tbody>
-            <tr th:each="gor : ${gors}">
-                <td th:text="${gor.id}"></td>
-                <td th:text="${gor.nama}"></td>
-                <td th:text="${gor.alamat}"></td>
-               <td>
-                <img th:src="@{'/gor/img/' + ${gor.id}}" alt="GOR Image" width="100" />
-            </td>
+            <tr th:each="gor, iterStat : ${gors}">
+                <td class="row-img">
+                    <div class="gor-img">
+                        <img th:src="@{'/gor/img/' + ${gor.id}}" alt="GOR Image" width="100" class="img" />
+                    </div>
+                </td>
                 <td>
-                    <a th:href="@{'/gor/edit/' + ${gor.id}}">Edit</a>
-                    <a th:href="@{'/lapangan/list/gor/' + ${gor.id}}">Lapangan List</a>
+                    <div class="col">
+                        <span th:text="${iterStat.index + 1}"></span>
+                        <span th:text="${gor.nama}" class="table-title"></span>
+                        <span th:text="${gor.alamat}"></span>
+                    </div>
+                </td>
+                <td class="table-actions row">
+                    <a th:href="@{'/gor/edit/' + ${gor.id}}" class="button-edit">Edit</a>
+                    <a th:href="@{'/lapangan/list/gor/' + ${gor.id}}" class="button">Lapangan List</a>
                     <form th:action="@{'/gor/delete/' + ${gor.id}}" method="post" style="display:inline;">
-                        <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                        <button type="submit" onclick="return confirm('Are you sure?')"
+                            class="button-delete">Delete</button>
                     </form>
                 </td>
             </tr>
