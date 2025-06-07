@@ -3,6 +3,7 @@ package com.tugas_besar.segor.entity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "booking")
@@ -21,10 +22,10 @@ public class BookingEntity {
     private LapanganEntity lapangan;
     
     @Column(name = "jam_mulai", nullable = false)
-    private LocalDateTime jamMulai;
+    private LocalTime jamMulai;
     
     @Column(name = "jam_selesai", nullable = false)
-    private LocalDateTime jamSelesai;
+    private LocalTime jamSelesai;
     
     @Column(name = "tanggal", nullable = false)
     private LocalDate tanggal;
@@ -34,7 +35,7 @@ public class BookingEntity {
     
     // Constructor with parameters
     public BookingEntity(Users user, LapanganEntity lapangan, 
-                        LocalDateTime jamMulai, LocalDateTime jamSelesai, LocalDate tanggal) {
+                        LocalTime jamMulai, LocalTime jamSelesai, LocalDate tanggal) {
         this.user = user;
         this.lapangan = lapangan;
         this.jamMulai = jamMulai;
@@ -67,19 +68,19 @@ public class BookingEntity {
         this.lapangan = lapangan;
     }
     
-    public LocalDateTime getJamMulai() {
+    public LocalTime getJamMulai() {
         return jamMulai;
     }
     
-    public void setJamMulai(LocalDateTime jamMulai) {
+    public void setJamMulai(LocalTime jamMulai) {
         this.jamMulai = jamMulai;
     }
     
-    public LocalDateTime getJamSelesai() {
+    public LocalTime getJamSelesai() {
         return jamSelesai;
     }
     
-    public void setJamSelesai(LocalDateTime jamSelesai) {
+    public void setJamSelesai(LocalTime jamSelesai) {
         this.jamSelesai = jamSelesai;
     }
     

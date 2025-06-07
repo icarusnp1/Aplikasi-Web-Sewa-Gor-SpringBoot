@@ -32,6 +32,7 @@
                 <td th:text="${lapangan.status}"></td>
                 <td th:text="${lapangan.deskripsi}"></td>
                 <td class="table-actions row">
+                    <a th:href="@{'/booking/create/' + ${lapangan.id}}" class="button">+ Book Lapangan</a>
                     <a th:href="@{'/lapangan/edit/' + ${lapangan.id}}" class="button-edit">Edit</a>
                     <form th:action="@{'/lapangan/delete/' + ${lapangan.id}}" method="post" style="display:inline;">
                         <button type="submit" onclick="return confirm('Yakin hapus?')"
@@ -41,7 +42,6 @@
             </tr>
         </tbody>
     </table>
-    <a th:href="@{/gor/list}" class="button-back">Kembali ke Daftar GOR</a>
 </body>
 
 </html>

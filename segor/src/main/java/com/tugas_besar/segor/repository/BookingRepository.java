@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Repository
@@ -32,6 +33,6 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Integer>
            "OR (b.jamMulai >= :jamMulai AND b.jamMulai < :jamSelesai))")
     List<BookingEntity> findConflictingBookings(@Param("lapanganId") Integer lapanganId,
                                                @Param("tanggal") LocalDate tanggal,
-                                               @Param("jamMulai") LocalDateTime jamMulai,
-                                               @Param("jamSelesai") LocalDateTime jamSelesai);
+                                               @Param("jamMulai") LocalTime jamMulai,
+                                               @Param("jamSelesai") LocalTime jamSelesai);
 }

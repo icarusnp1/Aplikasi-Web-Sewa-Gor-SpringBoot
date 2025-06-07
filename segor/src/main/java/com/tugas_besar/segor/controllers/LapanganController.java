@@ -1,6 +1,7 @@
 package com.tugas_besar.segor.controllers;
 
 import com.tugas_besar.segor.entity.LapanganEntity;
+import com.tugas_besar.segor.entity.BookingEntity;
 import com.tugas_besar.segor.entity.GorEntity;
 import com.tugas_besar.segor.service.LapanganService;
 import com.tugas_besar.segor.service.GorService;

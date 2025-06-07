@@ -4,6 +4,9 @@ import com.tugas_besar.segor.entity.BookingEntity;
 import com.tugas_besar.segor.entity.LapanganEntity;
 import com.tugas_besar.segor.entity.Users;
 import com.tugas_besar.segor.service.BookingService;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,24 +33,35 @@ public class BookingController {
 
     // Show create form
     @GetMapping("/create")
-    public String showCreateForm(Model model) {
+    public String showCreateForm(Model model, HttpSession session) {
+        Users user = (Users) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("userId", user.getId());
+        }
         model.addAttribute("booking", new BookingEntity());
-        
+
         // Get users and lapangan for dropdowns
         List<Users> users = bookingService.getAllUsers();
         List<LapanganEntity> lapangans = bookingService.getAllLapangan();
-        
+
         model.addAttribute("users", users);
         model.addAttribute("lapangans", lapangans);
-        
+
         return "booking/create";
     }
 
     // Handle create form
     @PostMapping("/save")
-    public String createBooking(@ModelAttribute("booking") BookingEntity booking, 
-                               RedirectAttributes redirectAttributes) {
+    public String createBooking(@ModelAttribute("booking") BookingEntity booking,
+            RedirectAttributes redirectAttributes, HttpSession session) {
         try {
+            Users user = (Users) session.getAttribute("user");
+            if (user != null) {
+                booking.setUser(user);
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "Anda harus login untuk membuat booking!");
+                return "redirect:/booking/create";
+            }
             bookingService.createBooking(booking);
             redirectAttributes.addFlashAttribute("successMessage", "Booking berhasil dibuat!");
         } catch (RuntimeException e) {
@@ -63,14 +77,14 @@ public class BookingController {
         Optional<BookingEntity> booking = bookingService.getBookingById(id);
         if (booking.isPresent()) {
             model.addAttribute("booking", booking.get());
-            
+
             // Get users and lapangan for dropdowns
             List<Users> users = bookingService.getAllUsers();
             List<LapanganEntity> lapangans = bookingService.getAllLapangan();
-            
+
             model.addAttribute("users", users);
             model.addAttribute("lapangans", lapangans);
-            
+
             return "booking/edit";
         } else {
             return "redirect:/booking/list";
@@ -79,9 +93,9 @@ public class BookingController {
 
     // Handle update form
     @PostMapping("/update/{id}")
-    public String updateBooking(@PathVariable Integer id, 
-                               @ModelAttribute("booking") BookingEntity bookingDetails,
-                               RedirectAttributes redirectAttributes) {
+    public String updateBooking(@PathVariable Integer id,
+            @ModelAttribute("booking") BookingEntity bookingDetails,
+            RedirectAttributes redirectAttributes) {
         try {
             bookingService.updateBooking(id, bookingDetails);
             redirectAttributes.addFlashAttribute("successMessage", "Booking berhasil diupdate!");
@@ -102,7 +116,7 @@ public class BookingController {
         }
         return "redirect:/booking/list";
     }
-    
+
     // Show bookings by user
     @GetMapping("/user/{userId}")
     public String getBookingsByUser(@PathVariable Integer userId, Model model) {
@@ -111,7 +125,7 @@ public class BookingController {
         model.addAttribute("filterType", "User ID: " + userId);
         return "booking/booking";
     }
-    
+
     // Show bookings by lapangan
     @GetMapping("/lapangan/{lapanganId}")
     public String getBookingsByLapangan(@PathVariable Integer lapanganId, Model model) {

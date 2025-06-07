@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Booking Lapangan</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+    <form th:action="@{/booking/save}" th:object="${booking}" method="post" class="form-container">
+        <h2>Booking Lapangan</h2>
+        <form th:action="@{/booking/save}" th:object="${booking}" method="post" class="form-container">
+            <input type="hidden" th:field="*{lapangan.id}" />
+            <div class="form-group">
+                <label>GOR:</label>
+                <input type="text" th:value="${gor.nama}" readonly class="form-input" />
+            </div>
+            <div class="form-group">
+                <label>Jenis Lapangan:</label>
+                <input type="text" th:value="${lapangan.jenis}" readonly class="form-input" />
+            </div>
+            <div class="form-group">
+                <label for="tanggal">Tanggal:</label>
+                <input type="date" th:field="*{tanggal}" id="tanggal" required class="form-input" />
+            </div>
+            <div class="form-group">
+                <label for="jamMulai">Jam Mulai:</label>
+                <input type="time" th:field="*{jamMulai}" id="jamMulai" required class="form-input" />
+            </div>
+            <div class="form-group">
+                <label for="jamSelesai">Jam Selesai:</label>
+                <input type="time" th:field="*{jamSelesai}" id="jamSelesai" required class="form-input" />
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="button">Booking</button>
+                <a th:href="@{'/lapangan/list/gor/' + ${gor.id}}" class="button-back">Kembali ke Daftar Lapangan</a>
+            </div>
+        </form>
+</body>
+
+</html>
