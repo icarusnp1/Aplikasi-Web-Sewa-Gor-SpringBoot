@@ -2,8 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Daftar Booking</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
+    <div th:replace="fragments/navbar :: main-navbar"></div>
     <h2>Daftar Booking</h2>
     <a th:href="@{/booking/create}">Tambah Booking</a>
     <table border="1">

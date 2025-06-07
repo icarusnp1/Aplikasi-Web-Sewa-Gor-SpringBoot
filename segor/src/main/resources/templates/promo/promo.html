@@ -2,8 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Daftar Promo</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
+    <div th:replace="fragments/navbar :: main-navbar"></div>
     <h2>Daftar Promo</h2>
     <a th:href="@{/promo/create}">Tambah Promo</a>
     <table border="1">

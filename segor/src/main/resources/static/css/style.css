@@ -16,8 +16,8 @@ body {
 }
 
 .body-gor {
-    margin-left: 64px;
-    margin-right: 64px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .table {
@@ -289,4 +289,50 @@ body {
     display: flex;
     gap: 12px;
     margin-top: 16px;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: var(--primary-dark);
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-link {
+    color: var(--primary-light);
+    text-decoration: none;
+    font-size: 15px;
+    padding: 8px 12px;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 5px;
+}
+
+.nav-link:hover {
+    background-color: var(--primary-light);
+    color: var(--navy-dark);
+}
+
+/* Active state example (for the current page) */
+.nav-link.active {
+    background-color: var(--primary-light);
+    color: var(--navy-dark);
+    box-shadow: 0 0 8px var(--primary-light);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        padding: 10px 0;
+    }
+    .nav-link {
+        font-size: 16px;
+        padding: 8px 10px;
+        text-align: center;
+    }
 }
