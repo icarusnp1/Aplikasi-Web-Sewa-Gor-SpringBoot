@@ -1,11 +1,6 @@
 package com.tugas_besar.segor.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "gor")
@@ -20,7 +15,8 @@ public class GorEntity {
     @Column(length = 255, nullable = false)
     private String alamat;
 
-    @Column(name = "img", columnDefinition = "BLOB")
+    @Lob
+    @Column(name = "img", columnDefinition = "MEDIUMBLOB")
     private byte[] img;
 
     // Getters and Setters

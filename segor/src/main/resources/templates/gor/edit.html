@@ -7,15 +7,16 @@
 
 <body>
     <h2>Edit GOR</h2>
-    <form th:action="@{'/gor/update/' + ${gor.id}}" th:object="${gor}" method="post">
+    <form th:action="@{'/gor/update/' + ${gor.id}}" th:object="${gor}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{id}" />
         <label>Nama:</label>
         <input type="text" th:field="*{nama}" required /><br />
         <label>Alamat:</label>
         <input type="text" th:field="*{alamat}" required /><br />
         <label>Img:</label>
-        <input type="file" name="imgFile" accept=".png,.jpg,.jpeg" required /><br />
+        <input type="file" name="imgFile" accept=".png,.jpg,.jpeg" /><br />
         <div th:if="*{img}">
-            <img th:src="*{img}" alt="GOR Image" style="max-width:200px;max-height:200px;"/><br />
+            <img th:src="@{'/gor/img/' + ${gor.id}}" alt="GOR Image" width="100" />
         </div>
         <button type="submit">Update</button>
     </form>

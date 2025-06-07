@@ -40,19 +40,12 @@ public class GorController {
     @PostMapping("/save")
     public String createGor(@ModelAttribute("gor") GorEntity gor,
             @RequestParam("imgFile") MultipartFile imgFile) {
-        if (!imgFile.isEmpty()) {
-            String fileName = imgFile.getOriginalFilename();
-            if (fileName != null
-                    && (fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg"))) {
-                try {
-                    gor.setImg(imgFile.getBytes());             
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    // Optionally, add error handling here
-                }
-            } else {
-                // Optionally, add error handling for invalid file type
+        try {
+            if (!imgFile.isEmpty()) {
+                gor.setImg(imgFile.getBytes());
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         gorService.createGor(gor);
         return "redirect:/gor/list";
@@ -72,7 +65,22 @@ public class GorController {
 
     // Handle update form
     @PostMapping("/update/{id}")
-    public String updateGor(@PathVariable Integer id, @ModelAttribute("gor") GorEntity gorDetails) {
+    public String updateGor(
+            @PathVariable Integer id,
+            @ModelAttribute("gor") GorEntity gorDetails,
+            @RequestParam(value = "imgFile", required = false) MultipartFile imgFile) {
+        try {
+            if (!imgFile.isEmpty()) {
+                gorDetails.setImg(imgFile.getBytes());
+            } else {
+                GorEntity existing = gorService.getGorById(id).orElse(null);
+                if (existing != null) {
+                    gorDetails.setImg(existing.getImg());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         gorService.updateGor(id, gorDetails);
         return "redirect:/gor/list";
     }
