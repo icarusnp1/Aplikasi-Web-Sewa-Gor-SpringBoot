@@ -17,19 +17,19 @@ public class AuthController {
 
     @GetMapping("/login")
     public String loginPage() {
-        return "login";
+        return "logreg/login";
     }
 
     @GetMapping("/register")
     public String registerPage() {
-        return "register";
+        return "logreg/register";
     }
 
     @PostMapping("/register")
     public String doRegister(@ModelAttribute Users user, Model model) {
         service.register(user);
         model.addAttribute("message", "Registrasi berhasil, silakan login.");
-        return "login";
+        return "logreg/login";
     }
 
     @PostMapping("/login")
@@ -44,7 +44,7 @@ public class AuthController {
             return "redirect:/home";
         } else {
             model.addAttribute("error", "Email atau password salah!");
-            return "login";
+            return "logreg/login";
         }
     }
 
@@ -55,7 +55,7 @@ public class AuthController {
             return "redirect:/login";
         }
         model.addAttribute("user", user);
-        return "home";
+        return "logreg/home";
     }
 
     @GetMapping("/logout")
