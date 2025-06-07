@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+    <title>Freebie 44 - Marketing Web App (Tailwind CSS) by pixelcave</title>
+
+    <meta
+      name="description"
+      content="Freebie 44 - Marketing Web App (Tailwind CSS). Check out more at https://pixelcave.com"
+    />
+    <meta name="author" content="pixelcave" />
+
+    <!-- Icons -->
+    <link
+      rel="icon"
+      href="https://cdn.pixelcave.com/favicon.svg"
+      sizes="any"
+      type="image/svg+xml"
+    />
+    <link
+      rel="icon"
+      href="https://cdn.pixelcave.com/favicon.png"
+      type="image/png"
+    />
+
+    <!-- Inter web font from bunny.net (GDPR compliant) -->
+    <link rel="preconnect" href="https://fonts.bunny.net" />
+    <link
+      href="https://fonts.bunny.net/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS Play CDN (mostly for development/testing purposes) -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <!-- Tailwind CSS v4 Configuration -->
+    <style type="text/tailwindcss">
+      /* Class based dark mode */
+      @custom-variant dark (&:where(.dark, .dark *));
+
+      /* Theme configuration */
+      @theme {
+        /* Fonts */
+        --default-font-family: "Inter";
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Page Container -->
+    <div
+      id="page-container"
+      class="mx-auto flex min-h-dvh w-full min-w-[320px] flex-col bg-gray-100"
+    >
+      <!-- Page Content -->
+      <main id="page-content" class="flex max-w-full flex-auto flex-col">
+        <!-- Hero -->
+        <div class="bg-gray-900">
+          <!-- Header -->
+          <header id="page-header" class="flex flex-none items-center py-10">
+            <div
+              class="container mx-auto flex flex-col gap-6 px-4 text-center sm:flex-row sm:items-center sm:justify-between sm:gap-0 lg:px-8 xl:max-w-6xl"
+            >
+              <div>
+                <a
+                  href="javascript:void(0)"
+                  class="inline-flex items-center gap-2 text-lg font-bold tracking-wide text-white hover:opacity-75"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    data-slot="icon"
+                    class="hi-mini hi-link inline-block size-5 opacity-50"
+                  >
+                    <path
+                      d="M12.232 4.232a2.5 2.5 0 0 1 3.536 3.536l-1.225 1.224a.75.75 0 0 0 1.061 1.06l1.224-1.224a4 4 0 0 0-5.656-5.656l-3 3a4 4 0 0 0 .225 5.865.75.75 0 0 0 .977-1.138 2.5 2.5 0 0 1-.142-3.667l3-3Z"
+                    />
+                    <path
+                      d="M11.603 7.963a.75.75 0 0 0-.977 1.138 2.5 2.5 0 0 1 .142 3.667l-3 3a2.5 2.5 0 0 1-3.536-3.536l1.225-1.224a.75.75 0 0 0-1.061-1.06l-1.224 1.224a4 4 0 1 0 5.656 5.656l3-3a4 4 0 0 0-.225-5.865Z"
+                    />
+                  </svg>
+                  <span>SEGOR</span>
+                </a>
+              </div>
+              <nav
+                class="flex items-center justify-center gap-4 text-sm sm:gap-6"
+              >
+                <a
+                   th:href="@{/login}"
+                  class="inline-flex items-center gap-2 font-semibold text-gray-400 hover:text-white"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    data-slot="icon"
+                    class="hi-mini hi-user-circle inline-block size-5 opacity-50"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-5.5-2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 12a5.99 5.99 0 0 0-4.793 2.39A6.483 6.483 0 0 0 10 16.5a6.483 6.483 0 0 0 4.793-2.11A5.99 5.99 0 0 0 10 12Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <span>Sign In</span>
+                </a>
+              </nav>
+            </div>
+          </header>
+          <!-- END Header -->
+
+          <!-- Hero Content -->
+          <div
+            class="container mx-auto px-4 pt-16 lg:px-8 lg:pt-32 xl:max-w-6xl"
+          >
+            <div class="text-center">
+              <h2
+                class="mb-4 text-3xl font-extrabold text-balance text-white md:text-5xl"
+              >
+                SEWA GOR DI SEGOR
+              </h2>
+              <h3
+                class="mx-auto text-lg font-medium text-gray-400 md:text-xl md:leading-relaxed lg:w-2/3"
+              >
+               SEGOR adalah platform yang memudahkan Anda untuk menyewa GOR. 
+               Dengan antarmuka yang sederhana dan intuitif, Anda dapat dengan mudah 
+               menemukan GOR yang sesuai dengan kebutuhan Anda. Baik untuk acara olahraga, 
+               turnamen, atau latihan, SEGOR menyediakan berbagai pilihan GOR di seluruh Indonesia.
+              </h3>
+            </div>
+            <div class="flex flex-wrap justify-center gap-4 pt-10 pb-16">
+              <button
+                type="button"
+                class="inline-flex items-center justify-center gap-2 rounded-full border border-blue-800 bg-blue-800 px-6 py-4 leading-6 font-semibold text-white hover:border-blue-700/50 hover:bg-blue-700/50 hover:text-white focus:ring-3 focus:ring-blue-500/50 focus:outline-hidden active:border-blue-700 active:bg-blue-700"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  data-slot="icon"
+                  class="hi-mini hi-arrow-right inline-block size-5 opacity-50"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>Get Started</span>
+              </button>
+              <button
+                type="button"
+                class="inline-flex items-center justify-center gap-2 rounded-full border border-gray-800 bg-gray-800 px-6 py-4 leading-6 font-semibold text-white hover:border-gray-700/50 hover:bg-gray-700/50 hover:text-white focus:ring-3 focus:ring-gray-500/25 focus:outline-hidden active:border-gray-700 active:bg-gray-700"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  data-slot="icon"
+                  class="hi-mini hi-eye inline-block size-5 opacity-50"
+                >
+                  <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                  <path
+                    fill-rule="evenodd"
+                    d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>Live Demo</span>
+              </button>
+            </div>
+            <div
+              class="relative mx-5 -mb-20 rounded-xl bg-white p-2 shadow-lg sm:-mb-40 lg:mx-32"
+            >
+              <img
+                src="assets/unsplash-4ec70e388b28.jpg"
+                alt="Hero Image"
+                class="mx-auto aspect-3/2 w-full rounded-lg object-cover"
+              />
+            </div>
+          </div>
+          <!-- END Hero Content -->
+        </div>
+        <!-- END Hero -->
+
+        <!-- Features Section -->
+        <div class="bg-white pt-40">
+          <div
+            class="container mx-auto space-y-16 px-4 py-16 lg:px-8 lg:py-32 xl:max-w-6xl"
+          >
+            <!-- Heading -->
+            <div class="text-center">
+              <h2 class="mb-4 text-3xl font-extrabold md:text-4xl">
+                Kelebihan memakai SEGOR
+              </h2>
+            </div>
+            <!-- END Heading -->
+
+            <!-- Features -->
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-12">
+              <div class="py-5 text-center">
+                <div
+                  class="relative mb-12 ml-3 inline-flex h-16 w-16 items-center justify-center"
+                >
+                  <div
+                    class="absolute inset-0 -m-3 translate-x-1 translate-y-1 rounded-full bg-blue-300"
+                  ></div>
+                  <div
+                    class="absolute inset-0 -m-3 rounded-full bg-blue-600/75"
+                  ></div>
+                  <svg
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="hi-outline hi-code relative inline-block h-10 w-10 text-white opacity-90 transition duration-150 ease-out group-hover:scale-125 group-hover:opacity-100"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="mb-2 text-xl font-bold">Mudah</h4>
+                <p class="text-left leading-relaxed text-gray-600">
+                 Pengguna bisa melihat jadwal ketersediaan GOR dan melakukan 
+                 booking kapan saja tanpa harus datang langsung.
+                </p>
+              </div>
+              <div class="py-5 text-center">
+                <div
+                  class="relative mb-12 ml-3 inline-flex h-16 w-16 items-center justify-center"
+                >
+                  <div
+                    class="absolute inset-0 -m-3 translate-x-1 translate-y-1 rounded-full bg-blue-300"
+                  ></div>
+                  <div
+                    class="absolute inset-0 -m-3 rounded-full bg-blue-600/75"
+                  ></div>
+                  <svg
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="hi-outline hi-device-mobile relative inline-block h-10 w-10 text-white opacity-90 transition duration-150 ease-out group-hover:scale-125 group-hover:opacity-100"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="mb-2 text-xl font-bold">Transparansi Informasi</h4>
+                <p class="text-left leading-relaxed text-gray-600">
+                 Harga, fasilitas, lokasi, dan aturan pemakaian biasanya ditampilkan jelas, 
+                 sehingga pengguna bisa membandingkan dan memilih dengan lebih yakin.
+                </p>
+              </div>
+              <div class="py-5 text-center">
+                <div
+                  class="relative mb-12 ml-3 inline-flex h-16 w-16 items-center justify-center"
+                >
+                  <div
+                    class="absolute inset-0 -m-3 translate-x-1 translate-y-1 rounded-full bg-blue-300"
+                  ></div>
+                  <div
+                    class="absolute inset-0 -m-3 rounded-full bg-blue-600/75"
+                  ></div>
+                  <span
+                    class="relative text-xl font-semibold text-white opacity-90 transition duration-150 ease-out group-hover:scale-125 group-hover:opacity-100"
+                    >JS</span
+                  >
+                </div>
+                <h4 class="mb-2 text-xl font-bold">Pembayaran Praktis dan Aman</h4>
+                <p class="text-left leading-relaxed text-gray-600">
+                  Tersedia berbagai metode pembayaran digital (transfer, e-wallet, dll.) 
+                  yang mempercepat proses transaksi dan mengurangi risiko membawa uang tunai.
+                </p>
+              </div>
+            </div>
+            <!-- END Features -->
+          </div>
+        </div>
+        <!-- END Features Section -->
+        
+          </div>
+        </div>
+        <!-- END Pricing Section -->
+
+        <!-- Stats Section -->
+        <div class="bg-gray-900">
+          <div class="container mx-auto px-4 lg:px-8 xl:max-w-7xl">
+            <div
+              class="grid grid-cols-1 divide-y divide-gray-800 text-center sm:grid-cols-3 sm:divide-x sm:divide-y-0"
+            >
+              <dl class="space-y-1 px-5 py-16 lg:py-32">
+                <dt class="text-4xl font-extrabold text-white" th:text="${totalUser}">998k+</dt>
+                <dd class="text-sm font-semibold tracking-wide text-blue-400 uppercase">
+                  Pengguna
+                </dd>
+              </dl>
+              <dl class="space-y-1 px-5 py-16 lg:py-32">
+                <dt class="text-4xl font-extrabold text-white" th:text="${totalGor}">1,5k+</dt>
+                <dd class="text-sm font-semibold tracking-wide text-blue-400 uppercase">
+                  GOR
+                </dd>
+              </dl>
+              <dl class="space-y-1 px-5 py-16 lg:py-32">
+                <dt class="text-4xl font-extrabold text-white" th:text="${totalLapangan}">7,9k</dt>
+                <dd class="text-sm font-semibold tracking-wide text-blue-400 uppercase">
+                  Lapangan
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <!-- END Stats Section -->
+        <!-- Footer -->
+        <footer id="page-footer" class="bg-white">
+          <div
+            class="container mx-auto flex flex-col gap-6 px-4 py-16 text-center text-sm md:flex-row md:justify-between md:gap-0 md:text-left lg:px-8 lg:py-32 xl:max-w-6xl"
+          >
+            <nav class="space-x-2 sm:space-x-4">
+              <a
+                href="javascript:void(0)"
+                class="font-medium text-gray-700 hover:text-blue-500"
+              >
+                About
+              </a>
+              <a
+                href="javascript:void(0)"
+                class="font-medium text-gray-700 hover:text-blue-500"
+              >
+                Terms of Service
+              </a>
+              <a
+                href="javascript:void(0)"
+                class="font-medium text-gray-700 hover:text-blue-500"
+              >
+                Privacy Policy
+              </a>
+            </nav>
+            <div class="text-gray-500">
+              <span class="font-medium">Company</span> ©
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+            </div>
+          </div>
+        </footer>
+        <!-- END Footer -->
+      </main>
+      <!-- END Page Content -->
+    </div>
+    <!-- END Page Container -->
+  </body>
+</html>

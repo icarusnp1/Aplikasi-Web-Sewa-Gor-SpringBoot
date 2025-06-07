@@ -37,4 +37,9 @@ public class GorService {
     public void deleteGor(Integer id) {
         gorRepository.deleteById(id);
     }
+
+    // Menghitung total gor di database
+    public long count() {
+        return gorRepository.count();
+    }
 }

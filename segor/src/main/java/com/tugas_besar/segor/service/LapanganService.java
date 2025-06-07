@@ -43,4 +43,9 @@ public class LapanganService {
     public void deleteLapangan(Integer id) {
         lapanganRepository.deleteById(id);
     }
+
+    // Menghitung total lapangan di database
+    public long count() {
+        return lapanganRepository.count();
+    }
 }

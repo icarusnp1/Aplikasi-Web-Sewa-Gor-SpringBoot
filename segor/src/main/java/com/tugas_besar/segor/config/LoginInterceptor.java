@@ -11,8 +11,16 @@ public class LoginInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession(false);
         String uri = request.getRequestURI();
 
-        // Allow login and register page without session
-        if (uri.equals("/login") || uri.equals("/register") || uri.equals("/logout")) {
+        // Allow login, register, logout, home, dan resource statis tanpa session
+        if (
+            uri.equals("/login") ||
+            uri.equals("/register") ||
+            uri.equals("/logout") ||
+            uri.startsWith("/home") ||
+            uri.startsWith("/css") ||
+            uri.startsWith("/js") ||
+            uri.startsWith("/images")
+        ) {
             return true;
         }
 
@@ -21,9 +29,6 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.sendRedirect("/login");
             return false;
         }
-
-        // Optionally, you can check role here
-        // String role = (String) session.getAttribute("role");
 
         return true;
     }
