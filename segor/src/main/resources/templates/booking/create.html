@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tambah Booking</title>
+</head>
+<body>
+    <h2>Tambah Booking</h2>
+    <form th:action="@{/booking/save}" th:object="${booking}" method="post">
+        <label>User:</label>
+        <select th:field="*{user}" required>
+            <option value="">Pilih User</option>
+            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.nama}"></option>
+        </select>
+        <br />
+
+        <label>Lapangan:</label>
+        <select th:field="*{lapangan}" required>
+            <option value="">Pilih Lapangan</option>
+            <option th:each="lapangan : ${lapangans}" th:value="${lapangan.id}" th:text="${lapangan.jenis}"></option>
+        </select>
+        <br />
+
+        <label>Tanggal:</label>
+        <input type="date" th:field="*{tanggal}" required /><br />
+
+        <label>Jam Mulai:</label>
+        <input type="datetime-local" th:field="*{jamMulai}" required /><br />
+
+        <label>Jam Selesai:</label>
+        <input type="datetime-local" th:field="*{jamSelesai}" required /><br />
+
+        <button type="submit">Simpan</button>
+    </form>
+    <a th:href="@{/booking/list}">Kembali ke Daftar Booking</a>
+</body>
+</html>

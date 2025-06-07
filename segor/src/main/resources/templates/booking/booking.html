@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Daftar Booking</title>
+</head>
+<body>
+    <h2>Daftar Booking</h2>
+    <a th:href="@{/booking/create}">Tambah Booking</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Lapangan</th>
+                <th>Tanggal</th>
+                <th>Jam Mulai</th>
+                <th>Jam Selesai</th>
+                <th>Durasi</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${#lists.isEmpty(bookings)}">
+                <td colspan="8" class="text-center">Tidak ada data booking</td>
+            </tr>
+            <tr th:each="booking : ${bookings}">
+                <td th:text="${booking.id}"></td>
+                <td th:text="${booking.user.nama}"></td>
+                <td th:text="${booking.lapangan.jenis}"></td>
+                <td th:text="${#temporals.format(booking.tanggal, 'dd MMM yyyy')}"></td>
+                <td th:text="${#temporals.format(booking.jamMulai, 'HH:mm')}"></td>
+                <td th:text="${#temporals.format(booking.jamSelesai, 'HH:mm')}"></td>
+                <td th:text="${T(java.time.Duration).between(booking.jamMulai, booking.jamSelesai).toHours()} + ' jam'"></td>
+                <td>
+                    <a th:href="@{'/booking/edit/' + ${booking.id}}">Edit</a>
+                    <form th:action="@{'/booking/delete/' + ${booking.id}}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Yakin hapus?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Total: <span th:text="${#lists.size(bookings)}">0</span> booking</p>
+    <a th:href="@{/}">Kembali ke Home</a>
+</body>
+</html>
