@@ -78,6 +78,55 @@ body {
     gap: 10px;
 }
 
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background-color: var(--primary-dark);
+    color: var(--primary-dark);
+}
+
+.table-lapangan {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--background);
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.19);
+    border: 1px solid var(--background);
+    border-radius: 16px;
+    margin-bottom: 20px;
+}
+
+.table-lapangan thead {
+    background-color: var(--primary-dark);
+    color: white;
+}
+
+.table-lapangan th, .table-lapangan td {
+    text-align: left;
+    padding: 12px;
+}
+
+.table-lapangan tbody tr:nth-child(even) {
+    background-color: #f6f7ff;
+}
+
+.table-lapangan tr {
+    border-radius: 16px;
+    border-left: 8px solid white;
+    transition: border-color 0.3s;
+}
+
+.table-lapangan tr:hover {
+    border-color: var(--primary-dark);
+}
+
+.table-lapangan th {
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
 .img {
     width: 300px;
     height: 300px;

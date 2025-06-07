@@ -3,23 +3,34 @@
 
 <head>
     <title>Create Lapangan</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 
 <body>
-    <h2>Tambah Lapangan</h2>
-    <form th:action="@{/lapangan/save}" th:object="${lapangan}" method="post">
-        <input type="hidden" th:field="*{gor.id}"/>
-        <label>Jenis:</label>
-        <input type="text" th:field="*{jenis}" required /><br />
-        <label>Tarif:</label>
-        <input type="number" th:field="*{tarif}" required /><br />
-        <label>Status:</label>
-        <input type="text" th:field="*{status}" /><br />
-        <label>Deskripsi:</label>
-        <input type="text" th:field="*{deskripsi}" /><br />
-        <button type="submit">Simpan</button>
+    <form th:action="@{/lapangan/save}" th:object="${lapangan}" method="post" class="form-container">
+        <h2>Tambah Lapangan</h2>
+        <input type="hidden" th:field="*{gor.id}" />
+        <div class="form-group">
+            <label for="jenis">Jenis:</label>
+            <input type="text" th:field="*{jenis}" id="jenis" required class="form-input" />
+        </div>
+        <div class="form-group">
+            <label for="tarif">Tarif:</label>
+            <input type="number" th:field="*{tarif}" id="tarif" required class="form-input" />
+        </div>
+        <div class="form-group">
+            <label for="status">Status:</label>
+            <input type="text" th:field="*{status}" id="status" class="form-input" />
+        </div>
+        <div class="form-group">
+            <label for="deskripsi">Deskripsi:</label>
+            <input type="text" th:field="*{deskripsi}" id="deskripsi" class="form-input" />
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="button">Simpan</button>
+            <a th:href="@{'/lapangan/list/gor/' + ${id_gor}}" class="button-back">Kembali ke Daftar Lapangan</a>
+        </div>
     </form>
-    <a th:href="@{'/lapangan/list/gor/' + ${id_gor}}">Kembali ke Daftar Lapangan</a>
 </body>
 
 </html>
