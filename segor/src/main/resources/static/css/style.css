@@ -125,6 +125,28 @@ body {
     text-decoration: none;
 }
 
+.button-back {
+    padding: 8px 20px;
+    background-color: white;
+    color: var(--primary-dark);
+    border: 1px solid var(--primary-dark);
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    font-family: inherit;
+    border-radius: 6px;
+    decoration: none;
+    text-decoration: none;
+}
+
+.button-back:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-light);
+    color: white;
+}
+
 .button-edit {
     padding: 8px 20px;
     background-color: var(--primary-light);
@@ -178,7 +200,44 @@ body {
     color: white;
 }
 
-.test {
-    border: 1px solid var(--primary-dark);
+.form-container {
+    max-width: 400px;
+    margin: 32px auto;
+    padding: 24px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.19);
+    border: 1px solid var(--background);
+}
+
+.form-group {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.form-input {
+    padding: 8px 10px;
+    border: 1px solid var(--primary-light);
+    background-color: var(--background);
     border-radius: 8px;
+    font-size: 1rem;
+}
+
+.form-input:focus {
+    border-color: var(--primary-dark);
+    background-color: white;
+    box-shadow: 0 0 5px rgba(24, 18, 108, 0.2);
+    outline: none;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
 }
