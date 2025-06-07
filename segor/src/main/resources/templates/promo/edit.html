@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Promo</title>
+</head>
+<body>
+    <h2>Edit Promo</h2>
+    <form th:action="@{'/promo/update/' + ${promo.id}}" th:object="${promo}" method="post">
+        <label>ID Promo:</label>
+        <input type="text" th:field="*{id}" readonly /><br />
+        <label>Total Promo:</label>
+        <input type="number" th:field="*{totalPromo}" required min="0" /><br />
+        <button type="submit">Update</button>
+    </form>
+    <a th:href="@{/promo/list}">Kembali ke Daftar Promo</a>
+</body>
+</html>

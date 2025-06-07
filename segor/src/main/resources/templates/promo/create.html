@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tambah Promo</title>
+</head>
+<body>
+    <h2>Tambah Promo</h2>
+    <form th:action="@{/promo/save}" th:object="${promo}" method="post">
+        <label>Total Promo:</label>
+        <input type="number" th:field="*{totalPromo}" required min="0" /><br />
+        <button type="submit">Simpan</button>
+    </form>
+    <a th:href="@{/promo/list}">Kembali ke Daftar Promo</a>
+</body>
+</html>
