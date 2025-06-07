@@ -40,18 +40,38 @@ public class AuthController {
 
     @PostMapping("/login")
     public String doLogin(@RequestParam("nama") String nama,
-                          @RequestParam("password") String password,
-                          Model model,
-                          HttpSession session) {
+                        @RequestParam("password") String password,
+                        Model model,
+                        HttpSession session) {
         Users user = userService.findByNamaAndPassword(nama, password);
         if (user != null) {
             session.setAttribute("user", user);
             session.setAttribute("role", user.getRole());
-            return "redirect:/home";
+            // Redirect berdasarkan role
+            if ("user".equalsIgnoreCase(user.getRole())) {
+                return "redirect:/user/gor";
+            } else if ("admin".equalsIgnoreCase(user.getRole())) {
+                return "redirect:/home";
+            } else {
+                return "redirect:/home";
+            }
         } else {
             model.addAttribute("error", "Email atau password salah!");
             return "logreg/login";
         }
+    }
+
+    @GetMapping("/user/gor")
+    public String userGorPage(HttpSession session, Model model) {
+        Users user = (Users) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("role", session.getAttribute("role"));
+        // Ambil data GOR dari service dan kirim ke view
+        model.addAttribute("gors", gorService.getAllGor());
+        return "user/gor";
     }
 
     @GetMapping("/home")

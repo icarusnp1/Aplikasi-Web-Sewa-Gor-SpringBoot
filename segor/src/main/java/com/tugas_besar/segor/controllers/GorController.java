@@ -69,6 +69,15 @@ public class GorController {
         return "redirect:/gor/list";
     }
 
+    @GetMapping("/user/gor")
+    public String userGorPage(Model model, HttpSession session) {
+        List<GorEntity> gors = gorService.getAllGor();
+        model.addAttribute("gors", gors);
+        model.addAttribute("user", session.getAttribute("user"));
+        model.addAttribute("role", session.getAttribute("role"));
+        return "user/gor";
+    }
+
     // Show edit form
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Integer id, Model model, HttpSession session) {

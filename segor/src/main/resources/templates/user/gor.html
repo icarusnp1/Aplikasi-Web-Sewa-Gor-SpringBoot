@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>GOR List</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body class="body-gor">
+    <div th:replace="fragments/navbar_user :: main-navbar"></div>
+    <h2>List of GOR</h2>
+
+    <table class="table">
+        <tbody>
+            <tr th:each="gor, iterStat : ${gors}">
+                <td class="row-img">
+                    <div class="gor-img">
+                        <img th:src="@{'/gor/img/' + ${gor.id}}" alt="GOR Image" width="100" class="img" />
+                    </div>
+                </td>
+                <td>
+                    <div class="col">
+                        <span th:text="${iterStat.index + 1}"></span>
+                        <span th:text="${gor.nama}" class="table-title"></span>
+                        <span th:text="${gor.alamat}"></span>
+                    </div>
+                </td>
+                <td class="table-actions row">                    
+                    <a th:href="@{'/lapangan/list/gor/' + ${gor.id}}" class="button">Lapangan List</a>                  
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
