@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Create Lapangan</title>
+</head>
+
+<body>
+    <h2>Tambah Lapangan</h2>
+    <form th:action="@{/lapangan/save}" th:object="${lapangan}" method="post">
+        <input type="hidden" th:field="*{gor.id}"/>
+        <label>Jenis:</label>
+        <input type="text" th:field="*{jenis}" required /><br />
+        <label>Tarif:</label>
+        <input type="number" th:field="*{tarif}" required /><br />
+        <label>Status:</label>
+        <input type="text" th:field="*{status}" /><br />
+        <label>Deskripsi:</label>
+        <input type="text" th:field="*{deskripsi}" /><br />
+        <button type="submit">Simpan</button>
+    </form>
+    <a th:href="@{'/lapangan/list/gor/' + ${id_gor}}">Kembali ke Daftar Lapangan</a>
+</body>
+
+</html>

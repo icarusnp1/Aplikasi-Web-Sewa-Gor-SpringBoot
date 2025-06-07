@@ -28,6 +28,7 @@
             </td>
                 <td>
                     <a th:href="@{'/gor/edit/' + ${gor.id}}">Edit</a>
+                    <a th:href="@{'/lapangan/list/gor/' + ${gor.id}}">Lapangan List</a>
                     <form th:action="@{'/gor/delete/' + ${gor.id}}" method="post" style="display:inline;">
                         <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
                     </form>

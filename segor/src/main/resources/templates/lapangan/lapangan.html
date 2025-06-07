@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lapangan List</title>
+</head>
+<body>
+    <h2>Daftar Lapangan</h2>
+    <a th:href="@{'/lapangan/create?id_gor=' + ${id_gor}}">Tambah Lapangan</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Jenis</th>
+                <th>Tarif</th>
+                <th>Status</th>
+                <th>Deskripsi</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="lapangan : ${lapangans}">
+                <td th:text="${lapangan.id}"></td>
+                <td th:text="${lapangan.jenis}"></td>
+                <td th:text="${lapangan.tarif}"></td>
+                <td th:text="${lapangan.status}"></td>
+                <td th:text="${lapangan.deskripsi}"></td>
+                <td>
+                    <a th:href="@{'/lapangan/edit/' + ${lapangan.id}}">Edit</a>
+                    <form th:action="@{'/lapangan/delete/' + ${lapangan.id}}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Yakin hapus?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/gor/list}">Kembali ke Daftar GOR</a>
+</body>
+</html>
