@@ -4,11 +4,11 @@
     <title>Daftar Booking</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
-<body>
+<body class="body-gor">
     <div th:replace="fragments/navbar :: main-navbar"></div>
     <h2>Daftar Booking</h2>
-    <a th:href="@{/booking/create}">Tambah Booking</a>
-    <table border="1">
+    <a th:href="@{/booking/create}" class="button">Tambah Booking</a>
+    <table class="table-lapangan">
         <thead>
             <tr>
                 <th>ID</th>
@@ -23,7 +23,7 @@
         </thead>
         <tbody>
             <tr th:if="${#lists.isEmpty(bookings)}">
-                <td colspan="8" class="text-center">Tidak ada data booking</td>
+                <td colspan="8" style="text-align:center;">Tidak ada data booking</td>
             </tr>
             <tr th:each="booking : ${bookings}">
                 <td th:text="${booking.id}"></td>
@@ -33,16 +33,14 @@
                 <td th:text="${#temporals.format(booking.jamMulai, 'HH:mm')}"></td>
                 <td th:text="${#temporals.format(booking.jamSelesai, 'HH:mm')}"></td>
                 <td th:text="${T(java.time.Duration).between(booking.jamMulai, booking.jamSelesai).toHours()} + ' jam'"></td>
-                <td>
-                    <a th:href="@{'/booking/edit/' + ${booking.id}}">Edit</a>
+                <td class="table-actions row">
+                    <a th:href="@{'/booking/edit/' + ${booking.id}}" class="button-edit">Edit</a>
                     <form th:action="@{'/booking/delete/' + ${booking.id}}" method="post" style="display:inline;">
-                        <button type="submit" onclick="return confirm('Yakin hapus?')">Delete</button>
+                        <button type="submit" onclick="return confirm('Yakin hapus?')" class="button-delete">Delete</button>
                     </form>
                 </td>
             </tr>
         </tbody>
     </table>
-    <p>Total: <span th:text="${#lists.size(bookings)}">0</span> booking</p>
-    <a th:href="@{/}">Kembali ke Home</a>
 </body>
 </html>
