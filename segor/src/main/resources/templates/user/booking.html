@@ -43,13 +43,17 @@
             <label for="jamSelesai">Jam Selesai:</label>
             <input type="time" th:field="*{jamSelesai}" id="jamSelesai" required class="form-input" />
         </div>
+        <div class="form-group" style="text-align:center;">
+            <img src="/images/QR.jpg" alt="QR Code"
+                style="width:180px;height:180px;display:block;margin:0 auto 10px auto;" />
+            <button type="button" id="btnCeklis" class="button" style="margin-top:10px;">&#10003; Ceklis</button>
+        </div>
         <div class="form-actions">
-            <button type="submit" class="button">Simpan</button>
+            <button type="submit" class="button-disabled" id="btnSimpan" disabled>Simpan</button>
             <a th:href="@{'/lapangan/user/list/gor/' + ${lapangan.gor.id}}" class="button-back">Kembali ke Daftar
                 Booking</a>
         </div>
     </form>
-
     <script>
         // Auto show modal if present (optional, for accessibility)
         window.onload = function() {
@@ -58,8 +62,28 @@
             if (errorModal) errorModal.style.display = 'block';
             if (successModal) successModal.style.display = 'block';
         }
-    </script>
 
+        const btnCeklis = document.getElementById('btnCeklis');
+        const btnSimpan = document.getElementById('btnSimpan');
+        let ceklisClicked = false;
+
+        // Pastikan tombol simpan selalu disable saat halaman dimuat
+        btnSimpan.disabled = true;
+
+        btnCeklis.addEventListener('click', function () {
+            btnSimpan.disabled = false;
+            btnSimpan.className = 'button'; // Change class to "button"
+            btnCeklis.style.backgroundColor = '#90ee90'; // hijau muda
+            ceklisClicked = true;
+        });
+
+        document.getElementById('bookingForm').addEventListener('submit', function (e) {
+            if (!ceklisClicked) {
+                e.preventDefault();
+                alert("Isi dulu QR lalu tekan ceklis");
+            }
+        });
+    </script>
 </body>
 
 </html>
