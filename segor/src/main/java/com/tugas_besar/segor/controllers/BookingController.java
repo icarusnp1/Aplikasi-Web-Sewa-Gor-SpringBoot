@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -85,7 +86,9 @@ public class BookingController {
 
     // Show user create form
     @GetMapping("/user/create/{id_lapangan}")
-    public String showUserCreateForm(Model model, HttpSession session, @PathVariable("id_lapangan") Integer id_lapangan) {
+    public String showUserCreateForm(Model model, HttpSession session,
+            @PathVariable("id_lapangan") Integer id_lapangan,
+            @RequestParam(value = "filterDate", required = false) String filterDateStr) {
         Users user = (Users) session.getAttribute("user");
         if (user != null) {
             model.addAttribute("userId", user.getId());
@@ -97,7 +100,14 @@ public class BookingController {
         model.addAttribute("lapangan", lapangan);
 
         // Ambil semua booking pada lapangan ini dan kirim ke template
-        List<BookingEntity> bookedList = bookingService.getBookingsByLapangan(id_lapangan);
+        List<BookingEntity> bookedList;
+        if (filterDateStr != null && !filterDateStr.isEmpty()) {
+            LocalDate filterDate = LocalDate.parse(filterDateStr);
+            bookedList = bookingService.getBookingsByLapanganAndDate(id_lapangan, filterDate);
+            model.addAttribute("filterDate", filterDateStr);
+        } else {
+            bookedList = bookingService.getBookingsByLapangan(id_lapangan);
+        }
         model.addAttribute("bookedList", bookedList);
 
         return "user/booking";

@@ -69,7 +69,22 @@
         <!-- Tabel Jadwal Booking -->
         <div class="form-container" style="flex:1; max-width:350px;">
             <h3 style="text-align:center; color:#2c3e50; margin-bottom:18px;">Jadwal Sudah Dibooking</h3>
-            <table style="width:100%; border-collapse:collapse; background:#f8f9fa; border-radius:8px; box-shadow:0 2px 8px #0001;">
+            <!-- Filter tanggal -->
+            <form th:action="@{/booking/user/create/{id_lapangan}(id_lapangan=${lapangan.id})}" method="get"
+                style="margin-bottom:12px; text-align:center;">
+                <input type="date" name="filterDate" th:value="${filterDate}"
+                    style="padding:4px 8px; border-radius:4px; border:1px solid #ccc;" />
+                <button type="submit" class="button" style="padding:4px 12px; font-size:0.95em;">Filter</button>
+                <a th:if="${filterDate != null}"
+                    th:href="@{/booking/user/create/{id_lapangan}(id_lapangan=${lapangan.id})}" class="button-back"
+                    style="margin-left:8px;">Reset</a>
+            </form>
+            <!-- Info tanggal filter -->
+            <div th:if="${filterDate != null}" style="text-align:center; margin-bottom:8px; color:#2980b9;">
+                Menampilkan booking untuk tanggal: <b th:text="${filterDate}"></b>
+            </div>
+            <table
+                style="width:100%; border-collapse:collapse; background:#f8f9fa; border-radius:8px; box-shadow:0 2px 8px #0001;">
                 <thead>
                     <tr style="background:#3498db; color:#fff;">
                         <th style="border-bottom:2px solid #2980b9; padding:8px;">Tanggal</th>
@@ -81,7 +96,8 @@
                     <tr th:if="${#lists.isEmpty(bookedList)}">
                         <td colspan="3" style="text-align:center; color:#888; padding:16px;">Belum ada booking</td>
                     </tr>
-                    <tr th:each="b,iter : ${bookedList}" th:class="${iter.index % 2 == 0} ? 'even-row' : 'odd-row'" style="transition:background 0.2s;">
+                    <tr th:each="b,iter : ${bookedList}" th:class="${iter.index % 2 == 0} ? 'even-row' : 'odd-row'"
+                        style="transition:background 0.2s;">
                         <td th:text="${b.tanggal}" style="padding:8px; text-align:center;"></td>
                         <td th:text="${b.jamMulai}" style="padding:8px; text-align:center;"></td>
                         <td th:text="${b.jamSelesai}" style="padding:8px; text-align:center;"></td>
@@ -89,11 +105,18 @@
                 </tbody>
             </table>
             <style>
-                .even-row { background: #eaf6fb; }
-                .odd-row { background: #fff; }
-                .form-container table tr:hover { background: #d1ecf1 !important; }
+                .even-row {
+                    background: #eaf6fb;
+                }
+
+                .odd-row {
+                    background: #fff;
+                }
+
+                .form-container table tr:hover {
+                    background: #d1ecf1 !important;
+                }
             </style>
-            <!-- Debug bookedList jika tetap kosong -->
             <div style="color:red; font-size:12px; margin-top:10px;" th:if="${#lists.isEmpty(bookedList)}">
                 <span th:text="'DEBUG: bookedList kosong atau tidak dikirim dari controller.'"></span>
             </div>
@@ -101,7 +124,7 @@
     </div>
     <script>
         // Auto show modal if present (optional, for accessibility)
-        window.onload = function() {
+        window.onload = function () {
             var errorModal = document.getElementById('errorModal');
             var successModal = document.getElementById('successModal');
             if (errorModal) errorModal.style.display = 'block';
@@ -138,7 +161,7 @@
             if (jamMulai && jamSelesai) {
                 const [mulaiJam, mulaiMenit] = jamMulai.split(':').map(Number);
                 const [selesaiJam, selesaiMenit] = jamSelesai.split(':').map(Number);
-                let durasi = (selesaiJam + selesaiMenit/60) - (mulaiJam + mulaiMenit/60);
+                let durasi = (selesaiJam + selesaiMenit / 60) - (mulaiJam + mulaiMenit / 60);
                 if (durasi > 0) {
                     total = Math.round(durasi * hargaPerJam);
                 }

@@ -117,4 +117,8 @@ public class BookingService {
     public List<BookingEntity> getBookingsByDate(LocalDate tanggal) {
         return bookingRepository.findByTanggal(tanggal);
     }
+
+    public List<BookingEntity> getBookingsByLapanganAndDate(Integer idLapangan, LocalDate tanggal) {
+    return bookingRepository.findByLapanganIdAndTanggal(idLapangan, tanggal);
+}
 }
