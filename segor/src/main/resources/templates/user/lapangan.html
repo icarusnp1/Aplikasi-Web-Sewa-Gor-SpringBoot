@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Lapangan List</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body class="body-gor">
+    <div th:replace="fragments/navbar_user :: main-navbar"></div>
+    <h2>Daftar Lapangan</h2>
+    <table class="table-lapangan">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Jenis</th>
+                <th>Tarif</th>
+                <th>Status</th>
+                <th>Deskripsi</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${#lists.isEmpty(lapangans)}">
+                <td colspan="6" style="text-align:center;">Tidak ada lapangan tersedia.</td>
+            </tr>
+            <tr th:each="lapangan, iterStat : ${lapangans}">
+                <td th:text="${iterStat.index + 1}"></td>
+                <td th:text="${lapangan.jenis}"></td>
+                <td th:text="${lapangan.tarif}"></td>
+                <td th:text="${lapangan.status}"></td>
+                <td th:text="${lapangan.deskripsi}"></td>
+                <td class="table-actions row">
+                    <a th:href="@{'/booking/user/create/' + ${lapangan.id}}" class="button">+ Book Lapangan</a>
+                    <a th:href="@{'/lapangan/edit/' + ${lapangan.id}}" class="button-edit">Edit</a>
+                    <form th:action="@{'/lapangan/delete/' + ${lapangan.id}}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Yakin hapus?')"
+                            class="button-delete">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

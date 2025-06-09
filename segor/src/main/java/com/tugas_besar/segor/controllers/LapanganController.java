@@ -38,6 +38,14 @@ public class LapanganController {
         return "lapangan/lapangan";
     }
 
+    @GetMapping("/user/list/gor/{id_gor}")
+    public String getUserLapanganByGor(@PathVariable("id_gor") Integer idGor, Model model) {
+        List<LapanganEntity> lapangans = lapanganService.getLapanganByGorId(idGor);
+        model.addAttribute("lapangans", lapangans);
+        model.addAttribute("id_gor", idGor);
+        return "user/lapangan";
+    }
+
     @GetMapping("/create")
     public String showCreateForm(@RequestParam("id_gor") Integer idGor, Model model) {
         LapanganEntity lapangan = new LapanganEntity();

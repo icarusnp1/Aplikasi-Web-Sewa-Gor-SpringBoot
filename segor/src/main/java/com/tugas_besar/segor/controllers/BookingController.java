@@ -4,6 +4,7 @@ import com.tugas_besar.segor.entity.BookingEntity;
 import com.tugas_besar.segor.entity.LapanganEntity;
 import com.tugas_besar.segor.entity.Users;
 import com.tugas_besar.segor.service.BookingService;
+import com.tugas_besar.segor.service.LapanganService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -22,6 +23,9 @@ public class BookingController {
 
     @Autowired
     private BookingService bookingService;
+    
+    @Autowired
+    private LapanganService lapanganService;
 
     // Show all bookings
     @GetMapping({ "/list", "" })
@@ -50,6 +54,40 @@ public class BookingController {
         return "booking/create";
     }
 
+    // Show create form
+    @GetMapping("/create/{id_lapangan}")
+    public String showCreateForm(Model model, HttpSession session, @PathVariable Integer id_lapangan) {
+        Users user = (Users) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("userId", user.getId());
+        }
+        model.addAttribute("booking", new BookingEntity());
+
+        // Get lapangan
+        LapanganEntity lapangan = lapanganService.getLapanganById(id_lapangan).orElse(null);
+
+        model.addAttribute("lapangans", lapangan);
+
+        return "booking/create";
+    }
+
+    // Show create form
+    @GetMapping("/user/create/{id_lapangan}")
+    public String showUserCreateForm(Model model, HttpSession session, @PathVariable Integer id_lapangan) {
+        Users user = (Users) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("userId", user.getId());
+        }
+        model.addAttribute("booking", new BookingEntity());
+
+        // Get lapangan
+        LapanganEntity lapangan = lapanganService.getLapanganById(id_lapangan).orElse(null);
+
+        model.addAttribute("lapangan", lapangan);
+
+        return "user/booking";
+    }
+
     // Handle create form
     @PostMapping("/save")
     public String createBooking(@ModelAttribute("booking") BookingEntity booking,
@@ -69,6 +107,26 @@ public class BookingController {
             return "redirect:/booking/create";
         }
         return "redirect:/booking/list";
+    }
+
+    @PostMapping("/user/save")
+    public String createUserBooking(@ModelAttribute("booking") BookingEntity booking,
+            RedirectAttributes redirectAttributes, HttpSession session) {
+        try {
+            Users user = (Users) session.getAttribute("user");
+            if (user != null) {
+                booking.setUser(user);
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "Anda harus login untuk membuat booking!");
+                return "redirect:/booking/user/create";
+            }
+            bookingService.createBooking(booking);
+            redirectAttributes.addFlashAttribute("successMessage", "Booking berhasil dibuat!");
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/booking/user/create";
+        }
+        return "redirect:/lapangan/user/list/gor/" + booking.getLapangan().getGor().getId();
     }
 
     // Show edit form
