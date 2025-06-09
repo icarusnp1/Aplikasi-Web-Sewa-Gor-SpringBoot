@@ -16,4 +16,8 @@ public class TransaksiService {
     public List<TransaksiEntity> getTransaksiByUser(Users user) {
         return transaksiRepository.findByUser(user);
     }
+
+    public TransaksiEntity saveTransaksi(TransaksiEntity transaksi) {
+        return transaksiRepository.save(transaksi);
+    }
 }

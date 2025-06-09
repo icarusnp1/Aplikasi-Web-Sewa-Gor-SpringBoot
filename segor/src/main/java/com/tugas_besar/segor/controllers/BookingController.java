@@ -2,9 +2,11 @@ package com.tugas_besar.segor.controllers;
 
 import com.tugas_besar.segor.entity.BookingEntity;
 import com.tugas_besar.segor.entity.LapanganEntity;
+import com.tugas_besar.segor.entity.TransaksiEntity;
 import com.tugas_besar.segor.entity.Users;
 import com.tugas_besar.segor.service.BookingService;
 import com.tugas_besar.segor.service.LapanganService;
+import com.tugas_besar.segor.service.TransaksiService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,9 +26,12 @@ public class BookingController {
 
     @Autowired
     private BookingService bookingService;
-    
+
     @Autowired
     private LapanganService lapanganService;
+
+    @Autowired
+    private TransaksiService transaksiService;
 
     // Show all bookings
     @GetMapping({ "/list", "" })
@@ -101,6 +107,25 @@ public class BookingController {
                 return "redirect:/booking/create";
             }
             bookingService.createBooking(booking);
+
+            // After bookingService.createBooking(booking);
+            TransaksiEntity transaksi = new TransaksiEntity();
+            transaksi.setUser(user); // user from session
+            transaksi.setLapangan(booking.getLapangan());
+            transaksi.setBooking(booking);
+            transaksi.setGor(booking.getLapangan().getGor());
+            transaksi.setPromo(null); // id_promo is null
+            transaksi.setStatus("pending");
+            transaksi.setTanggal(LocalDateTime.now());
+
+            // Optionally set durasi if you want, e.g.:
+            if (booking.getJamMulai() != null && booking.getJamSelesai() != null) {
+                int durasi = booking.getJamSelesai().toSecondOfDay() - booking.getJamMulai().toSecondOfDay();
+                transaksi.setDurasi(durasi / 3600); // in hours
+            }
+
+            transaksiService.saveTransaksi(transaksi);
+
             redirectAttributes.addFlashAttribute("successMessage", "Booking berhasil dibuat!");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
@@ -121,6 +146,25 @@ public class BookingController {
                 return "redirect:/booking/user/create";
             }
             bookingService.createBooking(booking);
+
+            // After bookingService.createBooking(booking);
+            TransaksiEntity transaksi = new TransaksiEntity();
+            transaksi.setUser(user); // user from session
+            transaksi.setLapangan(booking.getLapangan());
+            transaksi.setBooking(booking);
+            transaksi.setGor(booking.getLapangan().getGor());
+            transaksi.setPromo(null); // id_promo is null
+            transaksi.setStatus("pending");
+            transaksi.setTanggal(LocalDateTime.now());
+
+            // Optionally set durasi if you want, e.g.:
+            if (booking.getJamMulai() != null && booking.getJamSelesai() != null) {
+                int durasi = booking.getJamSelesai().toSecondOfDay() - booking.getJamMulai().toSecondOfDay();
+                transaksi.setDurasi(durasi / 3600); // in hours
+            }
+
+            transaksiService.saveTransaksi(transaksi); // or transaksiRepository.save(transaksi);
+
             redirectAttributes.addFlashAttribute("successMessage", "Booking berhasil dibuat!");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
