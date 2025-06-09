@@ -7,14 +7,27 @@
 </head>
 
 <body>
-    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
-    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+
+    <!-- Modal for error message -->
+    <div th:if="${errorMessage}" class="modal" id="errorModal">
+        <div class="modal-content alert-danger">
+            <span class="close" onclick="document.getElementById('errorModal').style.display='none'">&times;</span>
+            <span th:text="${errorMessage}"></span>
+        </div>
+    </div>
+    <!-- Modal for success message -->
+    <div th:if="${successMessage}" class="modal" id="successModal">
+        <div class="modal-content alert-success">
+            <span class="close" onclick="document.getElementById('successModal').style.display='none'">&times;</span>
+            <span th:text="${successMessage}"></span>
+        </div>
+    </div>
+
     <form th:action="@{/booking/save}" th:object="${booking}" method="post" class="form-container">
         <h2>Tambah Booking</h2>
         <div class="form-group">
             <label for="lapangan">Lapangan:</label>
             <select th:field="*{lapangan}" id="lapangan" required class="form-input">
-                <option value="">Pilih Lapangan</option>
                 <option th:each="lapangan : ${lapangans}" th:value="${lapangan.id}" th:text="${lapangan.jenis}">
                 </option>
             </select>
@@ -33,9 +46,20 @@
         </div>
         <div class="form-actions">
             <button type="submit" class="button">Simpan</button>
-            <a th:href="@{/booking/list}" class="button-back">Kembali ke Daftar Booking</a>
+            <a th:href="@{'/lapangan/list/gor/' + ${id_gor}}" class="button-back">Kembali ke Daftar Lapangan</a>
         </div>
     </form>
+
+    <script>
+        // Auto show modal if present (optional, for accessibility)
+        window.onload = function() {
+            var errorModal = document.getElementById('errorModal');
+            var successModal = document.getElementById('successModal');
+            if (errorModal) errorModal.style.display = 'block';
+            if (successModal) successModal.style.display = 'block';
+        }
+    </script>
+
 </body>
 
 </html>

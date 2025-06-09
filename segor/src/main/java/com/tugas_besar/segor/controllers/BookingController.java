@@ -1,6 +1,7 @@
 package com.tugas_besar.segor.controllers;
 
 import com.tugas_besar.segor.entity.BookingEntity;
+import com.tugas_besar.segor.entity.GorEntity;
 import com.tugas_besar.segor.entity.LapanganEntity;
 import com.tugas_besar.segor.entity.TransaksiEntity;
 import com.tugas_besar.segor.entity.Users;
@@ -74,6 +75,11 @@ public class BookingController {
 
         model.addAttribute("lapangans", lapangan);
 
+        // Get lapangan's GOR
+        GorEntity gor = lapangan.getGor();
+
+        model.addAttribute("id_gor", gor.getId());
+
         return "booking/create";
     }
 
@@ -129,9 +135,9 @@ public class BookingController {
             redirectAttributes.addFlashAttribute("successMessage", "Booking berhasil dibuat!");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-            return "redirect:/booking/create";
+            return "redirect:/booking/create/" + booking.getLapangan().getId();
         }
-        return "redirect:/booking/list";
+        return "redirect:/booking/create/" + booking.getLapangan().getId();
     }
 
     @PostMapping("/user/save")
@@ -168,9 +174,9 @@ public class BookingController {
             redirectAttributes.addFlashAttribute("successMessage", "Booking berhasil dibuat!");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-            return "redirect:/booking/user/create";
+            return "redirect:/booking/user/create/" + booking.getLapangan().getId();
         }
-        return "redirect:/lapangan/user/list/gor/" + booking.getLapangan().getGor().getId();
+        return "redirect:/booking/user/create/" + booking.getLapangan().getId();
     }
 
     // Show edit form
