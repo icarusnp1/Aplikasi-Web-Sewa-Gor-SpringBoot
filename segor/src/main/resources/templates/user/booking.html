@@ -9,8 +9,8 @@
 <body>
     <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
     <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
-    <form th:action="@{/booking/user/save}" th:object="${booking}" method="post" class="form-container">
-        <h2>Tambah Booking</h2>
+    <form th:action="@{/booking/user/save}" th:object="${booking}" method="post" class="form-container" id="bookingForm">
+        <h2>Tambah Booking user</h2>
         <div class="form-group">
             <label for="lapangan">Lapangan:</label>
             <select th:field="*{lapangan}" id="lapangan" required class="form-input">
@@ -30,11 +30,36 @@
             <label for="jamSelesai">Jam Selesai:</label>
             <input type="time" th:field="*{jamSelesai}" id="jamSelesai" required class="form-input" />
         </div>
+        <div class="form-group" style="text-align:center;">
+            <img src="/images/QR.jpg" alt="QR Code" style="width:180px;height:180px;display:block;margin:0 auto 10px auto;" />
+            <button type="button" id="btnCeklis" class="button" style="margin-top:10px;">&#10003; Ceklis</button>
+        </div>
         <div class="form-actions">
-            <button type="submit" class="button">Simpan</button>
+            <button type="submit" class="button" id="btnSimpan" disabled>Simpan</button>
             <a th:href="@{'/lapangan/user/list/gor/' + ${lapangan.gor.id}}" class="button-back">Kembali ke Daftar Booking</a>
         </div>
     </form>
+    <script>
+        const btnCeklis = document.getElementById('btnCeklis');
+        const btnSimpan = document.getElementById('btnSimpan');
+        let ceklisClicked = false;
+
+        // Pastikan tombol simpan selalu disable saat halaman dimuat
+        btnSimpan.disabled = true;
+
+        btnCeklis.addEventListener('click', function() {
+            btnSimpan.disabled = false;
+            btnCeklis.style.backgroundColor = '#90ee90'; // hijau muda
+            ceklisClicked = true;
+        });
+
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            if (!ceklisClicked) {
+                e.preventDefault();
+                alert("Isi dulu QR lalu tekan ceklis");
+            }
+        });
+    </script>
 </body>
 
 </html>
