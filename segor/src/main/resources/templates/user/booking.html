@@ -22,38 +22,73 @@
         </div>
     </div>
 
-    <form th:action="@{/booking/user/save}" th:object="${booking}" method="post" class="form-container">
-        <h2>Tambah Booking</h2>
-        <div class="form-group">
-            <label for="lapangan">Lapangan:</label>
-            <select th:field="*{lapangan}" id="lapangan" required class="form-input">
-                <option th:value="${lapangan.id}" th:text="${lapangan.jenis}" selected>
-                </option>
-            </select>
+    <div style="display: flex; justify-content: center; align-items: flex-start; gap: 32px;">
+        <form th:action="@{/booking/user/save}" th:object="${booking}" method="post" class="form-container"
+            id="bookingForm" style="flex:1;">
+            <h2>Tambah Booking</h2>
+            <div class="form-group">
+                <label for="lapangan">Lapangan:</label>
+                <select th:field="*{lapangan}" id="lapangan" required class="form-input">
+                    <option th:value="${lapangan.id}" th:text="${lapangan.jenis}" selected>
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tanggal">Tanggal:</label>
+                <input type="date" th:field="*{tanggal}" id="tanggal" required class="form-input" />
+            </div>
+            <div class="form-group">
+                <label for="jamMulai">Jam Mulai:</label>
+                <input type="time" th:field="*{jamMulai}" id="jamMulai" required class="form-input" />
+            </div>
+            <div class="form-group">
+                <label for="jamSelesai">Jam Selesai:</label>
+                <input type="time" th:field="*{jamSelesai}" id="jamSelesai" required class="form-input" />
+            </div>
+            <div class="form-group" style="text-align:center;">
+                <img src="/images/QR.jpg" alt="QR Code"
+                    style="width:180px;height:180px;display:block;margin:0 auto 10px auto;" />
+                <button type="button" id="btnCeklis" class="button" style="margin-top:10px;">&#10003; Ceklis</button>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="button-disabled" id="btnSimpan" disabled>Simpan</button>
+                <a th:href="@{'/lapangan/user/list/gor/' + ${lapangan.gor.id}}" class="button-back">Kembali ke Daftar
+                    Booking</a>
+            </div>
+        </form>
+        <!-- Tabel Jadwal Booking -->
+        <div class="form-container" style="flex:1; max-width:350px;">
+            <h3 style="text-align:center; color:#2c3e50; margin-bottom:18px;">Jadwal Sudah Dibooking</h3>
+            <table style="width:100%; border-collapse:collapse; background:#f8f9fa; border-radius:8px; box-shadow:0 2px 8px #0001;">
+                <thead>
+                    <tr style="background:#3498db; color:#fff;">
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">Tanggal</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">Jam Mulai</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">Jam Selesai</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(bookedList)}">
+                        <td colspan="3" style="text-align:center; color:#888; padding:16px;">Belum ada booking</td>
+                    </tr>
+                    <tr th:each="b,iter : ${bookedList}" th:class="${iter.index % 2 == 0} ? 'even-row' : 'odd-row'" style="transition:background 0.2s;">
+                        <td th:text="${b.tanggal}" style="padding:8px; text-align:center;"></td>
+                        <td th:text="${b.jamMulai}" style="padding:8px; text-align:center;"></td>
+                        <td th:text="${b.jamSelesai}" style="padding:8px; text-align:center;"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <style>
+                .even-row { background: #eaf6fb; }
+                .odd-row { background: #fff; }
+                .form-container table tr:hover { background: #d1ecf1 !important; }
+            </style>
+            <!-- Debug bookedList jika tetap kosong -->
+            <div style="color:red; font-size:12px; margin-top:10px;" th:if="${#lists.isEmpty(bookedList)}">
+                <span th:text="'DEBUG: bookedList kosong atau tidak dikirim dari controller.'"></span>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="tanggal">Tanggal:</label>
-            <input type="date" th:field="*{tanggal}" id="tanggal" required class="form-input" />
-        </div>
-        <div class="form-group">
-            <label for="jamMulai">Jam Mulai:</label>
-            <input type="time" th:field="*{jamMulai}" id="jamMulai" required class="form-input" />
-        </div>
-        <div class="form-group">
-            <label for="jamSelesai">Jam Selesai:</label>
-            <input type="time" th:field="*{jamSelesai}" id="jamSelesai" required class="form-input" />
-        </div>
-        <div class="form-group" style="text-align:center;">
-            <img src="/images/QR.jpg" alt="QR Code"
-                style="width:180px;height:180px;display:block;margin:0 auto 10px auto;" />
-            <button type="button" id="btnCeklis" class="button" style="margin-top:10px;">&#10003; Ceklis</button>
-        </div>
-        <div class="form-actions">
-            <button type="submit" class="button-disabled" id="btnSimpan" disabled>Simpan</button>
-            <a th:href="@{'/lapangan/user/list/gor/' + ${lapangan.gor.id}}" class="button-back">Kembali ke Daftar
-                Booking</a>
-        </div>
-    </form>
+    </div>
     <script>
         // Auto show modal if present (optional, for accessibility)
         window.onload = function() {

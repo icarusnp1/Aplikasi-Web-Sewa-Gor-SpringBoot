@@ -94,8 +94,11 @@ public class BookingController {
 
         // Get lapangan
         LapanganEntity lapangan = lapanganService.getLapanganById(id_lapangan).orElse(null);
-
         model.addAttribute("lapangan", lapangan);
+
+        // Ambil semua booking pada lapangan ini dan kirim ke template
+        List<BookingEntity> bookedList = bookingService.getBookingsByLapangan(id_lapangan);
+        model.addAttribute("bookedList", bookedList);
 
         return "user/booking";
     }
