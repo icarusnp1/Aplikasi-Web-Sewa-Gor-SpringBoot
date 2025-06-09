@@ -33,6 +33,12 @@ public class LapanganController {
     @GetMapping("/list/gor/{id_gor}")
     public String getLapanganByGor(@PathVariable("id_gor") Integer idGor, Model model) {
         List<LapanganEntity> lapangans = lapanganService.getLapanganByGorId(idGor);
+        GorEntity gor = gorService.getGorById(idGor).orElse(null);
+        if (gor != null) {
+            model.addAttribute("gor", gor);
+        } else {
+            model.addAttribute("error", "Gor not found");
+        }
         model.addAttribute("lapangans", lapangans);
         model.addAttribute("id_gor", idGor);
         return "lapangan/lapangan";
