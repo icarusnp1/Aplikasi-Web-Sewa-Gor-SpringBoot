@@ -51,7 +51,7 @@ public class AuthController {
             if ("user".equalsIgnoreCase(user.getRole())) {
                 return "redirect:/user/gor";
             } else if ("admin".equalsIgnoreCase(user.getRole())) {
-                return "redirect:/home";
+                return "redirect:/gor";
             } else {
                 return "redirect:/home";
             }
