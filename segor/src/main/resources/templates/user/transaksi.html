@@ -68,6 +68,7 @@
                     <th>GOR</th>
                     <th>Tanggal</th>
                     <th>Durasi (jam)</th>
+                    <th>Promo</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -77,6 +78,7 @@
                     <td th:text="${trx.gor.nama}"></td>
                     <td th:text="${trx.tanggal != null ? #temporals.format(trx.tanggal, 'dd-MM-yyyy HH:mm') : '-'}"></td>
                     <td th:text="${trx.durasi}"></td>
+                    <td th:text="${trx.promo != null ? trx.promo.totalPromo : '-'}"></td>
                     <td th:text="${trx.status}"></td>
                 </tr>
             </tbody>
