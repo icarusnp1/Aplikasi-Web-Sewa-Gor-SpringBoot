@@ -6,36 +6,44 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 
-<body class="body-gor">
-    <div th:replace="fragments/navbar_user :: main-navbar"></div>
-    <h2>List of GOR</h2>
-    
-   <form th:action="@{/gor/user/gor/search}" method="get" style="margin-bottom: 1rem;">
-    <input type="text" name="keyword" placeholder="Cari nama GOR..." />
-    <button type="submit">Cari</button>
-    </form>
+<body>
+    <div th:replace="fragments/navbar_user :: main-navbar(gor)"></div>
 
-    <table class="table">
-        <tbody>
-            <tr th:each="gor, iterStat : ${gors}">
-                <td class="row-img">
-                    <div class="gor-img">
-                        <img th:src="@{'/gor/img/' + ${gor.id}}" alt="GOR Image" width="100" class="img" />
-                    </div>
-                </td>
-                <td>
-                    <div class="col">
-                        <span th:text="${iterStat.index + 1}"></span>
-                        <span th:text="${gor.nama}" class="table-title"></span>
-                        <span th:text="${gor.alamat}"></span>
-                    </div>
-                </td>
-                <td class="table-actions row">                    
-                    <a th:href="@{'/lapangan/user/list/gor/' + ${gor.id}}" class="button">Lapangan List</a>                  
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="body-table">
+
+        <h2>List of GOR</h2>
+    
+        <form th:action="@{/gor/user/gor/search}" method="get" style="margin-bottom: 1rem; margin-left: 32px;">
+            <input type="text" name="keyword" placeholder="Cari nama GOR..." class="form-input" />
+            <button type="submit" class="button">Cari</button>
+            <a th:href="@{/user/gor}"
+                class="button-back">Clear</a>
+        </form>
+    
+        <table class="table">
+            <tbody>
+                <tr th:each="gor, iterStat : ${gors}">
+                    <td class="row-img">
+                        <div class="gor-img">
+                            <img th:src="@{'/gor/img/' + ${gor.id}}" alt="GOR Image" width="100" class="img" />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col">
+                            <span th:text="${iterStat.index + 1}"></span>
+                            <span th:text="${gor.nama}" class="table-title"></span>
+                            <span th:text="${gor.alamat}"></span>
+                        </div>
+                    </td>
+                    <td class="table-actions row">
+                        <a th:href="@{'/lapangan/user/list/gor/' + ${gor.id}}" class="button">Lapangan List</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+    </div>
+
 </body>
 
 </html>

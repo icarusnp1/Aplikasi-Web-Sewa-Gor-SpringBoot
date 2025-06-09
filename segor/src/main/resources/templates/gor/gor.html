@@ -7,36 +7,42 @@
 </head>
 
 <body class="body-gor">
-    <div th:replace="fragments/navbar :: main-navbar"></div>
-    <h2>List of GOR</h2>
-    <a th:href="@{/gor/create}" class="button">Tambah GOR</a>
-    
-    <table class="table">
-        <tbody>
-            <tr th:each="gor, iterStat : ${gors}">
-                <td class="row-img">
-                    <div class="gor-img">
-                        <img th:src="@{'/gor/img/' + ${gor.id}}" alt="GOR Image" width="100" class="img" />
-                    </div>
-                </td>
-                <td>
-                    <div class="col">
-                        <span th:text="${iterStat.index + 1}"></span>
-                        <span th:text="${gor.nama}" class="table-title"></span>
-                        <span th:text="${gor.alamat}"></span>
-                    </div>
-                </td>
-                <td class="table-actions row">
-                    <a th:href="@{'/gor/edit/' + ${gor.id}}" class="button-edit">Edit</a>
-                    <a th:href="@{'/lapangan/list/gor/' + ${gor.id}}" class="button">Lapangan List</a>
-                    <form th:action="@{'/gor/delete/' + ${gor.id}}" method="post" style="display:inline;">
-                        <button type="submit" onclick="return confirm('Are you sure?')"
-                            class="button-delete">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div th:replace="fragments/navbar :: main-navbar('gor')"></div>
+
+    <div class="body-table">
+
+        <h2>List of GOR</h2>
+        <a th:href="@{/gor/create}" class="button">Tambah GOR</a>
+        
+        <table class="table">
+            <tbody>
+                <tr th:each="gor, iterStat : ${gors}">
+                    <td class="row-img">
+                        <div class="gor-img">
+                            <img th:src="@{'/gor/img/' + ${gor.id}}" alt="GOR Image" width="100" class="img" />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col">
+                            <span th:text="${iterStat.index + 1}"></span>
+                            <span th:text="${gor.nama}" class="table-title"></span>
+                            <span th:text="${gor.alamat}"></span>
+                        </div>
+                    </td>
+                    <td class="table-actions row">
+                        <a th:href="@{'/gor/edit/' + ${gor.id}}" class="button-edit">Edit</a>
+                        <a th:href="@{'/lapangan/list/gor/' + ${gor.id}}" class="button">Lapangan List</a>
+                        <form th:action="@{'/gor/delete/' + ${gor.id}}" method="post" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Are you sure?')"
+                                class="button-delete">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
 </body>
 
 </html>

@@ -5,42 +5,48 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body class="body-gor">
-    <div th:replace="fragments/navbar :: main-navbar"></div>
-    <h2>Daftar Booking</h2>
-    <a th:href="@{/booking/create}" class="button">Tambah Booking</a>
-    <table class="table-lapangan">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>User</th>
-                <th>Lapangan</th>
-                <th>Tanggal</th>
-                <th>Jam Mulai</th>
-                <th>Jam Selesai</th>
-                <th>Durasi</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:if="${#lists.isEmpty(bookings)}">
-                <td colspan="8" style="text-align:center;">Tidak ada data booking</td>
-            </tr>
-            <tr th:each="booking : ${bookings}">
-                <td th:text="${booking.id}"></td>
-                <td th:text="${booking.user.nama}"></td>
-                <td th:text="${booking.lapangan.jenis}"></td>
-                <td th:text="${#temporals.format(booking.tanggal, 'dd MMM yyyy')}"></td>
-                <td th:text="${#temporals.format(booking.jamMulai, 'HH:mm')}"></td>
-                <td th:text="${#temporals.format(booking.jamSelesai, 'HH:mm')}"></td>
-                <td th:text="${T(java.time.Duration).between(booking.jamMulai, booking.jamSelesai).toHours()} + ' jam'"></td>
-                <td class="table-actions row">
-                    <a th:href="@{'/booking/edit/' + ${booking.id}}" class="button-edit">Edit</a>
-                    <form th:action="@{'/booking/delete/' + ${booking.id}}" method="post" style="display:inline;">
-                        <button type="submit" onclick="return confirm('Yakin hapus?')" class="button-delete">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div th:replace="fragments/navbar :: main-navbar('booking')"></div>
+
+    <div class="body-table">
+
+        <h2>Daftar Booking</h2>
+        <a th:href="@{/booking/create}" class="button">Tambah Booking</a>
+        <table class="table-lapangan">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Lapangan</th>
+                    <th>Tanggal</th>
+                    <th>Jam Mulai</th>
+                    <th>Jam Selesai</th>
+                    <th>Durasi</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${#lists.isEmpty(bookings)}">
+                    <td colspan="8" style="text-align:center;">Tidak ada data booking</td>
+                </tr>
+                <tr th:each="booking : ${bookings}">
+                    <td th:text="${booking.id}"></td>
+                    <td th:text="${booking.user.nama}"></td>
+                    <td th:text="${booking.lapangan.jenis}"></td>
+                    <td th:text="${#temporals.format(booking.tanggal, 'dd MMM yyyy')}"></td>
+                    <td th:text="${#temporals.format(booking.jamMulai, 'HH:mm')}"></td>
+                    <td th:text="${#temporals.format(booking.jamSelesai, 'HH:mm')}"></td>
+                    <td th:text="${T(java.time.Duration).between(booking.jamMulai, booking.jamSelesai).toHours()} + ' jam'"></td>
+                    <td class="table-actions row">
+                        <a th:href="@{'/booking/edit/' + ${booking.id}}" class="button-edit">Edit</a>
+                        <form th:action="@{'/booking/delete/' + ${booking.id}}" method="post" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Yakin hapus?')" class="button-delete">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
 </body>
 </html>

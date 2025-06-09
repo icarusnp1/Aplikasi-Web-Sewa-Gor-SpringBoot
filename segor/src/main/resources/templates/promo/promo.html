@@ -1,37 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Daftar Promo</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
-<body>
-    <div th:replace="fragments/navbar :: main-navbar"></div>
-    <h2>Daftar Promo</h2>
-    <a th:href="@{/promo/create}">Tambah Promo</a>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Total Promo</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:if="${#lists.isEmpty(promos)}">
-                <td colspan="3" class="text-center">Tidak ada data promo</td>
-            </tr>
-            <tr th:each="promo : ${promos}">
-                <td th:text="${promo.id}"></td>
-                <td th:text="${promo.totalPromo}"></td>
-                <td>
-                    <a th:href="@{'/promo/edit/' + ${promo.id}}">Edit</a>
-                    <form th:action="@{'/promo/delete/' + ${promo.id}}" method="post" style="display:inline;">
-                        <button type="submit" onclick="return confirm('Yakin hapus?')">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <a th:href="@{/}">Kembali ke Home</a>
+
+<body class="body-gor">
+    <div th:replace="fragments/navbar :: main-navbar('promo')"></div>
+
+    <div class="body-table">
+        <div class="row gap-8">
+            <h2>Daftar Promo</h2>
+        </div>
+        <a th:href="@{/promo/create}" class="button">Tambah Promo</a>
+        <table class="table-lapangan">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>ID</th>
+                    <th>Total Promo</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${#lists.isEmpty(promos)}">
+                    <td colspan="4" style="text-align:center;">Tidak ada data promo</td>
+                </tr>
+                <tr th:each="promo, iterStat : ${promos}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${promo.id}"></td>
+                    <td th:text="${promo.totalPromo}"></td>
+                    <td class="table-actions row">
+                        <a th:href="@{'/promo/edit/' + ${promo.id}}" class="button-edit">Edit</a>
+                        <form th:action="@{'/promo/delete/' + ${promo.id}}" method="post" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Yakin hapus?')" class="button-delete">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
+
 </html>

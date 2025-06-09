@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <body>
-    <nav class="navbar" th:fragment="main-navbar">
-        <a class="nav-link" th:href="@{/}">Home</a>
-        <a class="nav-link" th:href="@{/booking/list}">Booking</a>
-        <a class="nav-link" th:href="@{/gor/list}">GOR</a>
-        <a class="nav-link" th:href="@{/lapangan/list}">Lapangan</a>
-        <a class="nav-link" th:href="@{/promo/list}">Promo</a>
-        <a class="nav-link" th:href="@{/logout}">Logout</a>
+    <nav class="navbar" th:fragment="main-navbar(activePage)">
+        <!-- <a class="nav-link" th:href="@{/}" th:classappend="${activePage == 'home'} ? 'active'">Home</a> -->
+        <div class="row nav-group">
+            <h3 class="nav-title">SeGor</h3>
+        </div>
+        <div class="row nav-group">
+            <a class="nav-link" th:href="@{/booking/list}"
+                th:classappend="${activePage == 'booking'} ? 'active'">Booking</a>
+            <a class="nav-link" th:href="@{/gor/list}" th:classappend="${activePage == 'gor'} ? 'active'">GOR</a>
+            <a class="nav-link" th:href="@{/lapangan/list}"
+                th:classappend="${activePage == 'lapangan'} ? 'active'">Lapangan</a>
+            <a class="nav-link" th:href="@{/promo/list}" th:classappend="${activePage == 'promo'} ? 'active'">Promo</a>
+        </div>
+        <div class="row">
+            <a class="nav-link" th:href="@{/logout}" th:classappend="${activePage == 'logout'} ? 'active'">Logout</a>
+        </div>
     </nav>
 </body>
+
 </html>

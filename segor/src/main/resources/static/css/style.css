@@ -15,9 +15,9 @@ body {
     padding: 0;
 }
 
-.body-gor {
-    margin-left: 0px;
-    margin-right: 0px;
+.body-table {
+    margin-left: 128px;
+    margin-right: 128px;
 }
 
 .table {
@@ -316,6 +316,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
+    align-items: center;
 }
 
 .nav-link {
@@ -325,11 +326,29 @@ body {
     padding: 8px 12px;
     transition: background-color 0.3s, color 0.3s;
     border-radius: 5px;
+    height: fit-content;
 }
 
 .nav-link:hover {
     background-color: var(--primary-light);
     color: var(--navy-dark);
+}
+
+-nav-link:active {
+    background-color: var(--primary-dark);
+    color: white;
+}
+
+.nav-group {
+    display: flex;
+    gap: 32px;
+}
+
+.nav-title {
+    font-size: 1.25em;
+    color: white;
+    font-weight: bold;
+    margin-right: 20px;
 }
 
 /* Active state example (for the current page) */

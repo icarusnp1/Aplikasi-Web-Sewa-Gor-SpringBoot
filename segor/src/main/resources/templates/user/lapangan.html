@@ -7,43 +7,50 @@
 </head>
 
 <body class="body-gor">
+
     <div th:replace="fragments/navbar_user :: main-navbar"></div>
-    <div class="row gap-8">
-        <h2>
-            <a th:href="@{/gor/list}" class="link-gor">
-                Gor <span th:text="${gor != null ? gor.nama : 'Unknown'}"></span>
-            </a>
-        </h2>
-        <h2> &gt; </h2>
-        <h2>Daftar Lapangan</h2>
+
+    <div class="body-table">
+
+        <div class="row gap-8">
+            <h2>
+                <a th:href="@{/gor/list}" class="link-gor">
+                    Gor <span th:text="${gor != null ? gor.nama : 'Unknown'}"></span>
+                </a>
+            </h2>
+            <h2> &gt; </h2>
+            <h2>Daftar Lapangan</h2>
+        </div>
+        <table class="table-lapangan">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Jenis</th>
+                    <th>Tarif</th>
+                    <th>Status</th>
+                    <th>Deskripsi</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${#lists.isEmpty(lapangans)}">
+                    <td colspan="6" style="text-align:center;">Tidak ada lapangan tersedia.</td>
+                </tr>
+                <tr th:each="lapangan, iterStat : ${lapangans}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${lapangan.jenis}"></td>
+                    <td th:text="${lapangan.tarif}"></td>
+                    <td th:text="${lapangan.status}"></td>
+                    <td th:text="${lapangan.deskripsi}"></td>
+                    <td class="table-actions row">
+                        <a th:href="@{'/booking/user/create/' + ${lapangan.id}}" class="button">+ Book Lapangan</a>                           
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
     </div>
-    <table class="table-lapangan">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Jenis</th>
-                <th>Tarif</th>
-                <th>Status</th>
-                <th>Deskripsi</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:if="${#lists.isEmpty(lapangans)}">
-                <td colspan="6" style="text-align:center;">Tidak ada lapangan tersedia.</td>
-            </tr>
-            <tr th:each="lapangan, iterStat : ${lapangans}">
-                <td th:text="${iterStat.index + 1}"></td>
-                <td th:text="${lapangan.jenis}"></td>
-                <td th:text="${lapangan.tarif}"></td>
-                <td th:text="${lapangan.status}"></td>
-                <td th:text="${lapangan.deskripsi}"></td>
-                <td class="table-actions row">
-                    <a th:href="@{'/booking/user/create/' + ${lapangan.id}}" class="button">+ Book Lapangan</a>                           
-                </td>
-            </tr>
-        </tbody>
-    </table>
+
 </body>
 
 </html>

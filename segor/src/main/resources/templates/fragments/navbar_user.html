@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <body>
-    <nav class="navbar" th:fragment="main-navbar">
-        <a class="nav-link" th:href="@{/user/gor}">GOR</a>
-        <a class="nav-link" th:href="@{/user/transaksi}">Lihat transaksi</a>
-        <a class="nav-link" th:href="@{/logout}">Logout</a>
+    <nav class="navbar" th:fragment="main-navbar(activePage)">
+        <div class="row nav-group">
+            <h3 class="nav-title">SeGor</h3>
+        </div>
+        <div class="row nav-group">
+            <a class="nav-link" th:href="@{/user/gor}" th:classappend="${activePage == 'gor'} ? 'active'">GOR</a>
+            <a class="nav-link" th:href="@{/user/transaksi}" th:classappend="${activePage == 'transaksi'} ? 'active'">Lihat Transaksi</a>
+        </div>
+        <div class="row">
+            <a class="nav-link" th:href="@{/logout}" th:classappend="${activePage == 'logout'} ? 'active'">Logout</a>
+        </div>
     </nav>
 </body>
+
 </html>
