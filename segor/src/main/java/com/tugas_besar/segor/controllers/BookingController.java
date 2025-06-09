@@ -62,7 +62,7 @@ public class BookingController {
 
     // Show create form
     @GetMapping("/create/{id_lapangan}")
-    public String showCreateForm(Model model, HttpSession session, @PathVariable Integer id_lapangan) {
+    public String showCreateForm(Model model, HttpSession session, @PathVariable("id_lapangan") Integer id_lapangan) {
         Users user = (Users) session.getAttribute("user");
         if (user != null) {
             model.addAttribute("userId", user.getId());
@@ -77,9 +77,9 @@ public class BookingController {
         return "booking/create";
     }
 
-    // Show create form
+    // Show user create form
     @GetMapping("/user/create/{id_lapangan}")
-    public String showUserCreateForm(Model model, HttpSession session, @PathVariable Integer id_lapangan) {
+    public String showUserCreateForm(Model model, HttpSession session, @PathVariable("id_lapangan") Integer id_lapangan) {
         Users user = (Users) session.getAttribute("user");
         if (user != null) {
             model.addAttribute("userId", user.getId());
@@ -175,7 +175,7 @@ public class BookingController {
 
     // Show edit form
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Integer id, Model model) {
+    public String showEditForm(@PathVariable("id") Integer id, Model model) {
         Optional<BookingEntity> booking = bookingService.getBookingById(id);
         if (booking.isPresent()) {
             model.addAttribute("booking", booking.get());
@@ -195,7 +195,7 @@ public class BookingController {
 
     // Handle update form
     @PostMapping("/update/{id}")
-    public String updateBooking(@PathVariable Integer id,
+    public String updateBooking(@PathVariable("id") Integer id,
             @ModelAttribute("booking") BookingEntity bookingDetails,
             RedirectAttributes redirectAttributes) {
         try {
@@ -210,7 +210,7 @@ public class BookingController {
 
     // Handle delete
     @PostMapping("/delete/{id}")
-    public String deleteBooking(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+    public String deleteBooking(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         if (bookingService.deleteBooking(id)) {
             redirectAttributes.addFlashAttribute("successMessage", "Booking berhasil dihapus!");
         } else {
@@ -220,8 +220,8 @@ public class BookingController {
     }
 
     // Show bookings by user
-    @GetMapping("/user/{userId}")
-    public String getBookingsByUser(@PathVariable Integer userId, Model model) {
+    @GetMapping("/user/{userId:\\d+}")
+    public String getBookingsByUser(@PathVariable("userId") Integer userId, Model model) {
         List<BookingEntity> bookings = bookingService.getBookingsByUser(userId);
         model.addAttribute("bookings", bookings);
         model.addAttribute("filterType", "User ID: " + userId);
@@ -229,8 +229,8 @@ public class BookingController {
     }
 
     // Show bookings by lapangan
-    @GetMapping("/lapangan/{lapanganId}")
-    public String getBookingsByLapangan(@PathVariable Integer lapanganId, Model model) {
+    @GetMapping("/lapangan/{lapanganId:\\d+}")
+    public String getBookingsByLapangan(@PathVariable("lapanganId") Integer lapanganId, Model model) {
         List<BookingEntity> bookings = bookingService.getBookingsByLapangan(lapanganId);
         model.addAttribute("bookings", bookings);
         model.addAttribute("filterType", "Lapangan ID: " + lapanganId);
