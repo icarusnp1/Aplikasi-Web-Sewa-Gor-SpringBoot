@@ -84,7 +84,7 @@ public class LapanganController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Integer id, Model model) {
+    public String showEditForm(@PathVariable("id") Integer id, Model model) {
         Optional<LapanganEntity> lapangan = lapanganService.getLapanganById(id);
         if (lapangan.isPresent()) {
             model.addAttribute("lapangan", lapangan.get());
@@ -96,13 +96,13 @@ public class LapanganController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateLapangan(@PathVariable Integer id, @ModelAttribute("lapangan") LapanganEntity lapanganDetails) {
+    public String updateLapangan(@PathVariable("id") Integer id, @ModelAttribute("lapangan") LapanganEntity lapanganDetails) {
         lapanganService.updateLapangan(id, lapanganDetails);
         return "redirect:/lapangan/list";
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteLapangan(@PathVariable Integer id) {
+    public String deleteLapangan(@PathVariable("id") Integer id) {
         lapanganService.deleteLapangan(id);
         return "redirect:/lapangan/list";
     }

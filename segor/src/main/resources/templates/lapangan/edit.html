@@ -4,15 +4,34 @@
 <head>
     <title>Edit Lapangan</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+        /* Dropdown styling */
+        .styled-select {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+            background: #f8f8f8;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .styled-select:focus {
+            border-color: #007bff;
+            outline: none;
+            background: #eef6ff;
+        }
+    </style>
 </head>
 
 <body>
-    <form th:action="@{'/lapangan/update/' + ${lapangan.id}}" th:object="${lapangan}" method="post" class="form-container">
+    <form th:action="@{'/lapangan/update/' + ${lapangan.id}}" th:object="${lapangan}" method="post"
+        class="form-container">
         <h2>Edit Lapangan</h2>
         <input type="hidden" th:field="*{gor.id}" />
         <div class="form-group">
             <label for="jenis">Jenis:</label>
-            <input type="text" th:field="*{jenis}" id="jenis" required class="form-input" />
+            <input type="text" th:field="*{jenis}" id="jenis" class="form-input"
+                readonly style="background:#eee; color:#555;" />
         </div>
         <div class="form-group">
             <label for="tarif">Tarif:</label>
@@ -20,7 +39,10 @@
         </div>
         <div class="form-group">
             <label for="status">Status:</label>
-            <input type="text" th:field="*{status}" id="status" class="form-input" />
+            <select th:field="*{status}" id="status" class="styled-select">
+                <option value="Beroperasi" th:selected="${lapangan.status == 'Beroperasi'}">Beroperasi</option>
+                <option value="Pemeliharaan" th:selected="${lapangan.status == 'Pemeliharaan'}">Pemeliharaan</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="deskripsi">Deskripsi:</label>
@@ -28,7 +50,8 @@
         </div>
         <div class="form-actions">
             <button type="submit" class="button">Update</button>
-            <a th:href="@{'/lapangan/list/gor/' + ${lapangan.gor.id}}" class="button-back">Kembali ke Daftar Lapangan</a>
+            <a th:href="@{'/lapangan/list/gor/' + ${lapangan.gor.id}}" class="button-back">Kembali ke Daftar
+                Lapangan</a>
         </div>
     </form>
 </body>
