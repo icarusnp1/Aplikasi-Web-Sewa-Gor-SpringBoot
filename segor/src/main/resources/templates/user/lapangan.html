@@ -8,7 +8,15 @@
 
 <body class="body-gor">
     <div th:replace="fragments/navbar_user :: main-navbar"></div>
-    <h2>Daftar Lapangan</h2>
+    <div class="row gap-8">
+        <h2>
+            <a th:href="@{/gor/list}" class="link-gor">
+                Gor <span th:text="${gor != null ? gor.nama : 'Unknown'}"></span>
+            </a>
+        </h2>
+        <h2> &gt; </h2>
+        <h2>Daftar Lapangan</h2>
+    </div>
     <table class="table-lapangan">
         <thead>
             <tr>
