@@ -115,7 +115,7 @@ public class BookingController {
             transaksi.setBooking(booking);
             transaksi.setGor(booking.getLapangan().getGor());
             transaksi.setPromo(null); // id_promo is null
-            transaksi.setStatus("pending");
+            transaksi.setStatus("terbayar");
             transaksi.setTanggal(LocalDateTime.now());
 
             // Optionally set durasi if you want, e.g.:
@@ -154,7 +154,7 @@ public class BookingController {
             transaksi.setBooking(booking);
             transaksi.setGor(booking.getLapangan().getGor());
             transaksi.setPromo(null); // id_promo is null
-            transaksi.setStatus("pending");
+            transaksi.setStatus("terbayar");
             transaksi.setTanggal(LocalDateTime.now());
 
             // Optionally set durasi if you want, e.g.:
