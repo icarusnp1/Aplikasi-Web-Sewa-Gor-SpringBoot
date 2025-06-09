@@ -42,4 +42,9 @@ public class GorService {
     public long count() {
         return gorRepository.count();
     }
+
+
+    public List<GorEntity> searchByNama(String nama) {
+        return gorRepository.findByNamaContainingIgnoreCase(nama);
+    }
 }

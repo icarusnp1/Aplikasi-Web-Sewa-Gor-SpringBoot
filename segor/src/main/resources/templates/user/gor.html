@@ -9,6 +9,11 @@
 <body class="body-gor">
     <div th:replace="fragments/navbar_user :: main-navbar"></div>
     <h2>List of GOR</h2>
+    
+   <form th:action="@{/gor/user/gor/search}" method="get" style="margin-bottom: 1rem;">
+    <input type="text" name="keyword" placeholder="Cari nama GOR..." />
+    <button type="submit">Cari</button>
+    </form>
 
     <table class="table">
         <tbody>

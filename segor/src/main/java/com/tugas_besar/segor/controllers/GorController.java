@@ -138,4 +138,17 @@ public class GorController {
             return ResponseEntity.notFound().build();
         }
     }
+
+// ...existing code...
+
+    @GetMapping("/user/gor/search")
+    public String searchGor(@RequestParam("keyword") String keyword, Model model, HttpSession session) {
+        List<GorEntity> gors = gorService.searchByNama(keyword);
+        model.addAttribute("gors", gors);
+        model.addAttribute("user", session.getAttribute("user"));
+        model.addAttribute("role", session.getAttribute("role"));
+        return "user/gor";
+    }
+
+    // ...existing code...
 }
