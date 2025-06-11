@@ -37,7 +37,7 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Integer>
                      @Param("jamSelesai") LocalTime jamSelesai);
 
        // Find by lapangan id and tanggal, ordered by jamMulai
-       @Query("SELECT b FROM BookingEntity b WHERE b.lapangan.id = :lapanganId AND b.tanggal = :tanggal ORDER BY b.jamMulai")
+       @Query("SELECT b FROM BookingEntity b WHERE b.lapangan.id = :lapanganId AND b.tanggal = :tanggal ORDER BY b.tanggal ASC, b.jamMulai ASC")
        List<BookingEntity> findByLapanganIdAndTanggal(@Param("lapanganId") Integer lapanganId,
                      @Param("tanggal") LocalDate tanggal);
 }

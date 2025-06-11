@@ -274,6 +274,15 @@ body {
     border: 1px solid var(--background);
 }
 
+.form-container-book {
+    margin: 16px;
+    padding: 24px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.19);
+    border: 1px solid var(--background);
+}
+
 .form-group {
     margin-bottom: 18px;
     display: flex;
@@ -441,4 +450,10 @@ body {
 
 .close:hover {
     color: #000;
+}
+
+.booked {
+    background-color: #ffb3b3 !important; /* light red for booked hour */
+    color: #b30000 !important;
+    font-weight: bold;
 }

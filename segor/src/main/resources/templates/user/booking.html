@@ -22,8 +22,8 @@
         </div>
     </div>
 
-    <div style="display: flex; justify-content: center; align-items: flex-start; gap: 32px;">
-        <form th:action="@{/booking/user/save}" th:object="${booking}" method="post" class="form-container"
+    <div class="row">
+        <form th:action="@{/booking/user/save}" th:object="${booking}" method="post" class="form-container-book"
             id="bookingForm" style="flex:1;">
             <h2>Tambah Booking</h2>
             <div class="form-group">
@@ -55,6 +55,11 @@
                 <label>Total Harga:</label>
                 <span id="totalHarga">0</span>
             </div>
+            <!-- Add this after Total Harga in your form -->
+            <div class="form-group">
+                <label>Durasi (jam):</label>
+                <span id="durasiBooking">0</span>
+            </div>
             <div class="form-group" style="text-align:center;">
                 <img src="/images/QR.jpg" alt="QR Code"
                     style="width:180px;height:180px;display:block;margin:0 auto 10px auto;" />
@@ -67,7 +72,7 @@
             </div>
         </form>
         <!-- Tabel Jadwal Booking -->
-        <div class="form-container" style="flex:1; max-width:350px;">
+        <div class="form-container-book">
             <h3 style="text-align:center; color:#2c3e50; margin-bottom:18px;">Jadwal Sudah Dibooking</h3>
             <!-- Filter tanggal -->
             <form th:action="@{/booking/user/create/{id_lapangan}(id_lapangan=${lapangan.id})}" method="get"
@@ -88,8 +93,30 @@
                 <thead>
                     <tr style="background:#3498db; color:#fff;">
                         <th style="border-bottom:2px solid #2980b9; padding:8px;">Tanggal</th>
-                        <th style="border-bottom:2px solid #2980b9; padding:8px;">Jam Mulai</th>
-                        <th style="border-bottom:2px solid #2980b9; padding:8px;">Jam Selesai</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">00:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">01:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">02:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">03:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">04:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">05:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">06:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">07:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">08:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">09:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">10:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">11:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">12:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">13:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">14:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">15:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">16:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">17:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">18:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">19:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">20:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">21:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">22:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">23:00</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,8 +126,10 @@
                     <tr th:each="b,iter : ${bookedList}" th:class="${iter.index % 2 == 0} ? 'even-row' : 'odd-row'"
                         style="transition:background 0.2s;">
                         <td th:text="${b.tanggal}" style="padding:8px; text-align:center;"></td>
-                        <td th:text="${b.jamMulai}" style="padding:8px; text-align:center;"></td>
-                        <td th:text="${b.jamSelesai}" style="padding:8px; text-align:center;"></td>
+                        <td th:each="jam : ${#numbers.sequence(0, 23)}"
+                            th:text="${b.isHourBooked(jam)} ? ''"
+                            style="padding:8px; text-align:center; background-color:lightgray;"
+                            th:classappend="${b.isHourBooked(jam)} ? 'booked' : ''"></td>
                     </tr>
                 </tbody>
             </table>
@@ -158,15 +187,26 @@
             const jamMulai = document.getElementById('jamMulai').value;
             const jamSelesai = document.getElementById('jamSelesai').value;
             let total = 0;
+            let durasi = 0;
             if (jamMulai && jamSelesai) {
                 const [mulaiJam, mulaiMenit] = jamMulai.split(':').map(Number);
                 const [selesaiJam, selesaiMenit] = jamSelesai.split(':').map(Number);
-                let durasi = (selesaiJam + selesaiMenit / 60) - (mulaiJam + mulaiMenit / 60);
+                durasi = (selesaiJam + selesaiMenit / 60) - (mulaiJam + mulaiMenit / 60);
                 if (durasi > 0) {
                     total = Math.round(durasi * hargaPerJam);
+                } else {
+                    durasi = 0;
                 }
             }
             document.getElementById('totalHarga').textContent = total;
+            // Format durasi ke jam dan menit (HH:mm)
+            let durasiText = "0";
+            if (durasi > 0) {
+                const jam = Math.floor(durasi);
+                const menit = Math.round((durasi - jam) * 60);
+                durasiText = jam.toString().padStart(2, '0') + ":" + menit.toString().padStart(2, '0');
+            }
+            document.getElementById('durasiBooking').textContent = durasiText;
         }
 
         document.getElementById('jamMulai').addEventListener('change', hitungTotalHarga);
