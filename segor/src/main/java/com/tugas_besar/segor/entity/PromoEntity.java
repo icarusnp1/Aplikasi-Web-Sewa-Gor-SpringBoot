@@ -12,6 +12,9 @@ public class PromoEntity {
     
     @Column(name = "total_promo", nullable = false)
     private Integer totalPromo;
+
+    @Column(name = "kode", unique = true, nullable = false)
+    private String kode;
     
     // Default constructor
     public PromoEntity() {}
@@ -36,6 +39,14 @@ public class PromoEntity {
     
     public void setTotalPromo(Integer totalPromo) {
         this.totalPromo = totalPromo;
+    }
+
+    public String getKode() {
+        return kode;
+    }
+
+    public void setKode(String kode) {
+        this.kode = kode;
     }
     
     @Override

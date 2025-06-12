@@ -48,4 +48,12 @@ public class PromoService {
         }
         return false;
     }
+
+    public boolean existsByKode(String kode) {
+        if (promoRepository.existsByKode(kode)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

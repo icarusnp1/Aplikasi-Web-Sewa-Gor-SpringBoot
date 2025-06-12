@@ -1,15 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Tambah Promo</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
+
 <body>
-    <h2>Tambah Promo</h2>
-    <form th:action="@{/promo/save}" th:object="${promo}" method="post">
-        <label>Total Promo:</label>
-        <input type="number" th:field="*{totalPromo}" required min="0" /><br />
-        <button type="submit">Simpan</button>
+    <!-- Modal for error message -->
+    <div th:if="${errorMessage}" class="modal" id="errorModal">
+        <div class="modal-content alert-danger">
+            <span class="close" onclick="document.getElementById('errorModal').style.display='none'">&times;</span>
+            <span th:text="${errorMessage}"></span>
+        </div>
+    </div>
+    <!-- Modal for success message -->
+    <div th:if="${successMessage}" class="modal" id="successModal">
+        <div class="modal-content alert-success">
+            <span class="close" onclick="document.getElementById('successModal').style.display='none'">&times;</span>
+            <span th:text="${successMessage}"></span>
+        </div>
+    </div>
+
+    <form th:action="@{/promo/save}" th:object="${promo}" method="post" class="form-container">
+        <h2>Tambah Promo</h2>
+        <div class="form-group">
+            <label for="kode">Kode Promo:</label>
+            <input type="text" th:field="*{kode}" required min="0" class="form-input" />
+        </div>
+        <div class="form-group">
+            <label for="total-promo">Total Promo:</label>
+            <input type="number" th:field="*{totalPromo}" required min="0" class="form-input" />
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="button">Simpan</button>
+            <a th:href="@{/promo/list}" class="button-back">Kembali ke Daftar Promo</a>
+        </div>
     </form>
-    <a th:href="@{/promo/list}">Kembali ke Daftar Promo</a>
+
+    <script>
+        // Auto show modal if present (optional, for accessibility)
+        window.onload = function () {
+            var errorModal = document.getElementById('errorModal');
+            var successModal = document.getElementById('successModal');
+            if (errorModal) errorModal.style.display = 'block';
+            if (successModal) successModal.style.display = 'block';
+        }
+    </script>
 </body>
+
 </html>

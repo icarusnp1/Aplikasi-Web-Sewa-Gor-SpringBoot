@@ -51,15 +51,19 @@
                 <input type="time" th:field="*{jamSelesai}" id="jamSelesai" required class="form-input" />
             </div>
             <!-- Total harga -->
-            <div class="form-group">
-                <label>Total Harga:</label>
-                <span id="totalHarga">0</span>
-            </div>
-            <!-- Add this after Total Harga in your form -->
-            <div class="form-group">
-                <label>Durasi (jam):</label>
-                <span id="durasiBooking">0</span>
-            </div>
+             <div class="row flex-between">
+
+                 <div class="form-group">
+                     <label>Total Harga:</label>
+                     <span id="totalHarga">0</span>
+                 </div>
+                 <!-- Add this after Total Harga in your form -->
+                 <div class="form-group">
+                     <label>Durasi (jam):</label>
+                     <span id="durasiBooking">0</span>
+                 </div>
+
+             </div>
             <div class="form-group" style="text-align:center;">
                 <img src="/images/QR.jpg" alt="QR Code"
                     style="width:180px;height:180px;display:block;margin:0 auto 10px auto;" />

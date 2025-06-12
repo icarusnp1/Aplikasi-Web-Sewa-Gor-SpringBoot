@@ -457,3 +457,9 @@ body {
     color: #b30000 !important;
     font-weight: bold;
 }
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

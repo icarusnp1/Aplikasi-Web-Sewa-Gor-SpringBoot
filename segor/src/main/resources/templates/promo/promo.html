@@ -18,7 +18,7 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>ID</th>
+                    <th>Kode</th>
                     <th>Total Promo</th>
                     <th>Actions</th>
                 </tr>
@@ -29,7 +29,7 @@
                 </tr>
                 <tr th:each="promo, iterStat : ${promos}">
                     <td th:text="${iterStat.index + 1}"></td>
-                    <td th:text="${promo.id}"></td>
+                    <td th:text="${promo.kode}"></td>
                     <td th:text="${promo.totalPromo}"></td>
                     <td class="table-actions row">
                         <a th:href="@{'/promo/edit/' + ${promo.id}}" class="button-edit">Edit</a>

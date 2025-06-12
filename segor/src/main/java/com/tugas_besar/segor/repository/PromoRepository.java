@@ -9,4 +9,5 @@ public interface PromoRepository extends JpaRepository<PromoEntity, Integer> {
     // You can add custom query methods here if needed
     // For example:
     // List<PromoEntity> findByTotalPromoGreaterThan(Integer totalPromo);
+    boolean existsByKode(String kode);
 }
