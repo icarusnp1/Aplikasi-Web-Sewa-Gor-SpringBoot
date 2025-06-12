@@ -76,4 +76,11 @@ public class PromoController {
         promoService.deletePromo(id);
         return "redirect:/promo/list";
     }
+
+    // Tambahkan endpoint untuk mengirimkan daftar promo ke halaman booking
+    @GetMapping("/list/json")
+    @ResponseBody
+    public List<PromoEntity> getAllPromoJson() {
+        return promoService.getAllPromo();
+    }
 }

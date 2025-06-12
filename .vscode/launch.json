@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SegorApplication",
+            "request": "launch",
+            "mainClass": "com.tugas_besar.segor.SegorApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-SegorApplication<segor>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
