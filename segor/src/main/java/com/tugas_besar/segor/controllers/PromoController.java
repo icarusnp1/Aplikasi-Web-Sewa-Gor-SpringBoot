@@ -52,9 +52,11 @@ public class PromoController {
     }
 
 
-    // Show edit form
+    // ...existing code...
+
+// Show edit form
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Integer id, Model model) {
+    public String showEditForm(@PathVariable("id") Integer id, Model model) {
         Optional<PromoEntity> promo = promoService.getPromoById(id);
         if (promo.isPresent()) {
             model.addAttribute("promo", promo.get());
@@ -64,20 +66,19 @@ public class PromoController {
         }
     }
 
-    // Handle update form
+// Handle update form
     @PostMapping("/update/{id}")
-    public String updatePromo(@PathVariable Integer id, @ModelAttribute("promo") PromoEntity promoDetails) {
+    public String updatePromo(@PathVariable("id") Integer id, @ModelAttribute("promo") PromoEntity promoDetails) {
         promoService.updatePromo(id, promoDetails);
         return "redirect:/promo/list";
     }
 
-    // Handle delete
+// Handle delete
     @PostMapping("/delete/{id}")
-    public String deletePromo(@PathVariable Integer id) {
+    public String deletePromo(@PathVariable("id") Integer id) {
         promoService.deletePromo(id);
         return "redirect:/promo/list";
     }
-
     // Tambahkan endpoint untuk mengirimkan daftar promo ke halaman booking
     @GetMapping("/list/json")
     @ResponseBody

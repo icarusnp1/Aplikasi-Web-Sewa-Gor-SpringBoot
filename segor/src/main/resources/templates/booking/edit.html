@@ -2,37 +2,72 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Edit Booking</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
-    <h2>Edit Booking</h2>
-    <form th:action="@{'/booking/update/' + ${booking.id}}" th:object="${booking}" method="post">
+    <!-- Modal for error message -->
+    <div th:if="${errorMessage}" class="modal" id="errorModal">
+        <div class="modal-content alert-danger">
+            <span class="close" onclick="document.getElementById('errorModal').style.display='none'">&times;</span>
+            <span th:text="${errorMessage}"></span>
+        </div>
+    </div>
+    <!-- Modal for success message -->
+    <div th:if="${successMessage}" class="modal" id="successModal">
+        <div class="modal-content alert-success">
+            <span class="close" onclick="document.getElementById('successModal').style.display='none'">&times;</span>
+            <span th:text="${successMessage}"></span>
+        </div>
+    </div>
+
+    <form th:action="@{'/booking/update/' + ${booking.id}}" th:object="${booking}" method="post" class="form-container">
+        <h2>Edit Booking</h2>
         <input type="hidden" th:field="*{id}" />
 
-        <label>User:</label>
-        <select th:field="*{user}" required>
-            <option value="">Pilih User</option>
-            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.nama}"></option>
-        </select>
-        <br />
+        <div class="form-group">
+            <label for="user">User:</label>
+            <select th:field="*{user}" id="user" required class="form-input">
+                <option value="">Pilih User</option>
+                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.nama}"></option>
+            </select>
+        </div>
 
-        <label>Lapangan:</label>
-        <select th:field="*{lapangan}" required>
-            <option value="">Pilih Lapangan</option>
-            <option th:each="lapangan : ${lapangans}" th:value="${lapangan.id}" th:text="${lapangan.jenis}"></option>
-        </select>
-        <br />
+        <div class="form-group">
+            <label for="lapangan">Lapangan:</label>
+            <select th:field="*{lapangan}" id="lapangan" required class="form-input">
+                <option value="">Pilih Lapangan</option>
+                <option th:each="lapangan : ${lapangans}" th:value="${lapangan.id}" th:text="${lapangan.jenis}"></option>
+            </select>
+        </div>
 
-        <label>Tanggal:</label>
-        <input type="date" th:field="*{tanggal}" required /><br />
+        <div class="form-group">
+            <label for="tanggal">Tanggal:</label>
+            <input type="date" th:field="*{tanggal}" id="tanggal" required class="form-input" />
+        </div>
 
-        <label>Jam Mulai:</label>
-        <input type="datetime-local" th:field="*{jamMulai}" required /><br />
+        <div class="form-group">
+            <label for="jamMulai">Jam Mulai:</label>
+            <input type="time" th:field="*{jamMulai}" id="jamMulai" required class="form-input" />
+        </div>
 
-        <label>Jam Selesai:</label>
-        <input type="datetime-local" th:field="*{jamSelesai}" required /><br />
+        <div class="form-group">
+            <label for="jamSelesai">Jam Selesai:</label>
+            <input type="time" th:field="*{jamSelesai}" id="jamSelesai" required class="form-input" />
+        </div>
 
-        <button type="submit">Update</button>
+        <div class="form-actions">
+            <button type="submit" class="button">Update</button>
+            <a th:href="@{/booking/list}" class="button-back">Kembali ke Daftar Booking</a>
+        </div>
     </form>
-    <a th:href="@{/booking/list}">Kembali ke Daftar Booking</a>
+
+    <script th:inline="javascript">
+        window.onload = function() {
+            var errorModal = document.getElementById('errorModal');
+            var successModal = document.getElementById('successModal');
+            if (errorModal) errorModal.style.display = 'block';
+            if (successModal) successModal.style.display = 'block';
+        }
+    </script>
 </body>
 </html>

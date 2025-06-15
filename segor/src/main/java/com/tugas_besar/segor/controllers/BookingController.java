@@ -107,7 +107,7 @@ public class BookingController {
         return "user/booking";
     }
 
-    // Handle create booking user (PASTIKAN HANYA ADA SATU METHOD INI)
+    // Handle create booking user
     @PostMapping("/user/save")
     public String createUserBooking(
             @ModelAttribute("booking") BookingEntity booking,
@@ -155,7 +155,7 @@ public class BookingController {
         return "redirect:/booking/user/create/" + booking.getLapangan().getId();
     }
 
-    // Handle create booking (admin/general, jika ingin support promo, tambahkan param promoId juga)
+    // Handle create booking (admin/general)
     @PostMapping("/save")
     public String createBooking(
             @ModelAttribute("booking") BookingEntity booking,
@@ -221,5 +221,20 @@ public class BookingController {
             return "redirect:/booking/list";
         }
     }
+
+    // Handle update booking
+    @PostMapping("/update/{id}")
+    public String updateBooking(
+        @PathVariable("id") Integer id,
+        @ModelAttribute("booking") BookingEntity bookingDetails,
+        RedirectAttributes redirectAttributes) {
+        try {
+            bookingService.updateBooking(id, bookingDetails);
+            redirectAttributes.addFlashAttribute("successMessage", "Booking berhasil diupdate!");
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/booking/edit/" + id;
+        }
+        return "redirect:/booking/list";
+    }
 }
-    //

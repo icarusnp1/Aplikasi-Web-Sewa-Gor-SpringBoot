@@ -78,77 +78,77 @@ public class GorController {
         return "user/gor";
     }
 
-    // Show edit form
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Integer id, Model model, HttpSession session) {
-        Optional<GorEntity> gor = gorService.getGorById(id);
-        if (gor.isPresent()) {
-            model.addAttribute("gor", gor.get());
-            model.addAttribute("user", session.getAttribute("user"));
-            model.addAttribute("role", session.getAttribute("role"));
-            return "gor/edit";
+    // ...existing code...
+
+// Show edit form
+@GetMapping("/edit/{id}")
+public String showEditForm(@PathVariable("id") Integer id, Model model, HttpSession session) {
+    Optional<GorEntity> gor = gorService.getGorById(id);
+    if (gor.isPresent()) {
+        model.addAttribute("gor", gor.get());
+        model.addAttribute("user", session.getAttribute("user"));
+        model.addAttribute("role", session.getAttribute("role"));
+        return "gor/edit";
+    } else {
+        return "redirect:/gor/list";
+    }
+}
+
+// Handle update form
+@PostMapping("/update/{id}")
+public String updateGor(
+        @PathVariable("id") Integer id,
+        @ModelAttribute("gor") GorEntity gorDetails,
+        @RequestParam(value = "imgFile", required = false) MultipartFile imgFile) {
+    try {
+        if (imgFile != null && !imgFile.isEmpty()) {
+            gorDetails.setImg(imgFile.getBytes());
         } else {
-            return "redirect:/gor/list";
-        }
-    }
-
-    // Handle update form
-    @PostMapping("/update/{id}")
-    public String updateGor(
-            @PathVariable Integer id,
-            @ModelAttribute("gor") GorEntity gorDetails,
-            @RequestParam(value = "imgFile", required = false) MultipartFile imgFile) {
-        try {
-            if (!imgFile.isEmpty()) {
-                gorDetails.setImg(imgFile.getBytes());
-            } else {
-                GorEntity existing = gorService.getGorById(id).orElse(null);
-                if (existing != null) {
-                    gorDetails.setImg(existing.getImg());
-                }
+            GorEntity existing = gorService.getGorById(id).orElse(null);
+            if (existing != null) {
+                gorDetails.setImg(existing.getImg());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        gorService.updateGor(id, gorDetails);
-        return "redirect:/gor/list";
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+    gorService.updateGor(id, gorDetails);
+    return "redirect:/gor/list";
+}
 
-    // Handle delete
-    @PostMapping("/delete/{id}")
-    public String deleteGor(@PathVariable Integer id) {
-        gorService.deleteGor(id);
-        return "redirect:/gor/list";
-    }
+// Handle delete
+@PostMapping("/delete/{id}")
+public String deleteGor(@PathVariable("id") Integer id) {
+    gorService.deleteGor(id);
+    return "redirect:/gor/list";
+}
 
-    // Serve image
-    @GetMapping("/img/{id}")
-    public ResponseEntity<byte[]> getGorImage(@PathVariable Integer id) {
-        Optional<GorEntity> gor = gorService.getGorById(id);
-        if (gor.isPresent()) {
-            byte[] img = gor.get().getImg();
-            if (img != null && img.length > 0) {
-                return ResponseEntity.ok()
-                    .header("Content-Type", "image/jpeg")
-                    .body(img);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+// Serve image
+@GetMapping("/img/{id}")
+public ResponseEntity<byte[]> getGorImage(@PathVariable("id") Integer id) {
+    Optional<GorEntity> gor = gorService.getGorById(id);
+    if (gor.isPresent()) {
+        byte[] img = gor.get().getImg();
+        if (img != null && img.length > 0) {
+            return ResponseEntity.ok()
+                .header("Content-Type", "image/jpeg")
+                .body(img);
         } else {
             return ResponseEntity.notFound().build();
         }
+    } else {
+        return ResponseEntity.notFound().build();
     }
+}
 
 // ...existing code...
 
-    @GetMapping("/user/gor/search")
-    public String searchGor(@RequestParam("keyword") String keyword, Model model, HttpSession session) {
-        List<GorEntity> gors = gorService.searchByNama(keyword);
-        model.addAttribute("gors", gors);
-        model.addAttribute("user", session.getAttribute("user"));
-        model.addAttribute("role", session.getAttribute("role"));
-        return "user/gor";
-    }
-
-    // ...existing code...
+@GetMapping("/user/gor/search")
+public String searchGor(@RequestParam("keyword") String keyword, Model model, HttpSession session) {
+    List<GorEntity> gors = gorService.searchByNama(keyword);
+    model.addAttribute("gors", gors);
+    model.addAttribute("user", session.getAttribute("user"));
+    model.addAttribute("role", session.getAttribute("role"));
+    return "user/gor";
+}
 }
