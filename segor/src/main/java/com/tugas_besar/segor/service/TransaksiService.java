@@ -20,4 +20,8 @@ public class TransaksiService {
     public TransaksiEntity saveTransaksi(TransaksiEntity transaksi) {
         return transaksiRepository.save(transaksi);
     }
+
+    public boolean cekPromoDiTransaksi(int promoId) {
+        return transaksiRepository.existsByPromoId(promoId);
+    }
 }

@@ -84,6 +84,7 @@
             </div>
             <div class="form-actions">
                 <button type="submit" class="button-disabled" id="btnSimpan" disabled>Simpan</button>
+                <input type="hidden" name="promoId" id="promoIdHidden" />
                 <a th:href="@{'/lapangan/user/list/gor/' + ${lapangan.gor.id}}" class="button-back">Kembali ke Daftar
                     Booking</a>
             </div>
@@ -218,9 +219,11 @@
         if (promo) {
             promoValue = promo.totalPromo;
             document.getElementById('nilaiPromo').textContent = promoValue;
+            document.getElementById('promoIdHidden').value = promo.id; // Set id promo ke input hidden
         } else {
             promoValue = 0;
             document.getElementById('nilaiPromo').textContent = "0";
+            document.getElementById('promoIdHidden').value = ""; // Kosongkan jika tidak valid
             alert("Kode promo tidak valid!");
         }
         hitungTotalHarga();

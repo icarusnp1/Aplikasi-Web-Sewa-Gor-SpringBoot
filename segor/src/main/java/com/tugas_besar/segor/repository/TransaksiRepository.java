@@ -9,4 +9,7 @@ import java.util.List;
 @Repository
 public interface TransaksiRepository extends JpaRepository<TransaksiEntity, Integer> {
     List<TransaksiEntity> findByUser(Users user);
+    // ...existing code...
+    boolean existsByPromoId(Integer promoId);
+    // ...existing code...
 }

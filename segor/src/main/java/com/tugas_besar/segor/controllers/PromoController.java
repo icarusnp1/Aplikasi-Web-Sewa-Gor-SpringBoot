@@ -51,6 +51,7 @@ public class PromoController {
         return "redirect:/promo/list";
     }
 
+
     // Show edit form
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Integer id, Model model) {
