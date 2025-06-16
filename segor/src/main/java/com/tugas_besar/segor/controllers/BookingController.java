@@ -10,9 +10,11 @@ import com.tugas_besar.segor.service.BookingService;
 import com.tugas_besar.segor.service.LapanganService;
 import com.tugas_besar.segor.service.TransaksiService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -246,4 +248,26 @@ public class BookingController {
         }
         return "redirect:/booking/list";
     }
+
+  @PostMapping("/delete/{id}")
+    public String deleteBooking(@PathVariable Integer id,
+                                RedirectAttributes redirectAttributes,
+                                HttpServletRequest request) {
+        try {
+            boolean deleted = bookingService.deleteBooking(id);  // Panggil via instance
+            if (deleted) {
+                redirectAttributes.addFlashAttribute("successMessage", "Booking berhasil dihapus.");
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "Booking tidak ditemukan.");
+            }
+        } catch (DataIntegrityViolationException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Booking tidak dapat dihapus karena terkait dengan data lain.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Terjadi kesalahan saat menghapus booking.");
+        }
+
+        String referer = request.getHeader("Referer");
+        return "redirect:" + (referer != null ? referer : "/booking/list");
+    }
+
 }

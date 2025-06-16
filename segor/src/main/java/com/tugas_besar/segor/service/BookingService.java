@@ -7,6 +7,7 @@ import com.tugas_besar.segor.repository.BookingRepository;
 import com.tugas_besar.segor.repository.LapanganRepository;
 import com.tugas_besar.segor.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -96,13 +97,18 @@ public class BookingService {
     
     // Delete booking
     public boolean deleteBooking(Integer id) {
-        if (bookingRepository.existsById(id)) {
-            bookingRepository.deleteById(id);
-            return true;
+        try {
+            if (bookingRepository.existsById(id)) {
+                bookingRepository.deleteById(id);
+                return true;
+            }
+        } catch (Exception e) {
+            throw new DataIntegrityViolationException("Booking gagal dihapus", e);
         }
         return false;
     }
-    
+
+
     // Get bookings by user
     public List<BookingEntity> getBookingsByUser(Integer userId) {
         return bookingRepository.findByUserId(userId);

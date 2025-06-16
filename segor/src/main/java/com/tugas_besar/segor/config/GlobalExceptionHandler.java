@@ -15,19 +15,26 @@ public class GlobalExceptionHandler {
             RedirectAttributes redirectAttributes,
             HttpServletRequest request) {
 
-        // Ambil URL referer (asal request)
         String referer = request.getHeader("Referer");
-
-        // Tambahkan pesan error untuk ditampilkan di halaman selanjutnya
         redirectAttributes.addFlashAttribute("errorMessage", "Data tidak dapat dihapus karena sedang digunakan di tabel lain.");
 
-        // Jika berasal dari halaman promo, redirect ke /promo (untuk keamanan dan konsistensi)
-        if (referer != null && referer.contains("/promo")) {
-            return "redirect:/promo";
-        }
+        return "redirect:" + (referer != null ? referer : "/");
+    }
 
-        // Jika dari halaman lain, redirect kembali ke referer
+    @ExceptionHandler(Exception.class)
+    public String handleGeneralException(Exception ex,
+                                         RedirectAttributes redirectAttributes,
+                                         HttpServletRequest request) {
+
+        String referer = request.getHeader("Referer");
+
+        // Log semua exception umum
+        System.err.println("General Exception caught:");
+        ex.printStackTrace();
+
+        redirectAttributes.addFlashAttribute("errorMessage",
+                "Terjadi kesalahan internal: " + ex.getMessage());
+
         return "redirect:" + (referer != null ? referer : "/");
     }
 }
-    
