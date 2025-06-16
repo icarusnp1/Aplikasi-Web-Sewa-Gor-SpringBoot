@@ -24,4 +24,8 @@ public class TransaksiService {
     public boolean cekPromoDiTransaksi(int promoId) {
         return transaksiRepository.existsByPromoId(promoId);
     }
+
+    public List<TransaksiEntity> getAllTransaksi() {
+    return transaksiRepository.findAll();
+    }
 }

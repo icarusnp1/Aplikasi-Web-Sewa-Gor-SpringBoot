@@ -27,6 +27,7 @@ public class TransaksiController {
     @JoinColumn(name = "promo_id")
     private PromoEntity promo;
 
+    
     @PostMapping("/user/cek-promo")
     public String cekPromo(@RequestParam int promoId, Model model) {
         boolean exists = transaksiService.cekPromoDiTransaksi(promoId);
@@ -36,6 +37,13 @@ public class TransaksiController {
             model.addAttribute("promoStatus", "Promo tidak ditemukan.");
         }
         return "user/transaksi";
+    }
+
+    @GetMapping("/transaksi/all")
+    public String allTransaksiPage(Model model) {
+        List<TransaksiEntity> transaksiList = transaksiService.getAllTransaksi();
+        model.addAttribute("transaksis", transaksiList);
+        return "transaksi/transaksi_all";
     }
 
     @GetMapping("/user/transaksi")
