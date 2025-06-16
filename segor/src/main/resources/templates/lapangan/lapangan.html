@@ -4,13 +4,44 @@
 <head>
     <title>Lapangan List</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
+
+    <style>
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 40%;
+            border-radius: 8px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body class="body-gor">
     <div th:replace="fragments/navbar :: main-navbar('lapangan')"></div>
 
     <div class="body-table">
-
         <div class="row gap-8">
             <h2>
                 <a th:href="@{/gor/list}" class="link-gor">
@@ -20,7 +51,9 @@
             <h2> &gt; </h2>
             <h2>Daftar Lapangan</h2>
         </div>
+
         <a th:href="@{'/lapangan/create?id_gor=' + ${id_gor}}" class="button">Tambah Lapangan</a>
+
         <table class="table-lapangan">
             <thead>
                 <tr>
@@ -46,15 +79,34 @@
                         <a th:href="@{'/booking/create/' + ${lapangan.id}}" class="button">+ Book Lapangan</a>
                         <a th:href="@{'/lapangan/edit/' + ${lapangan.id}}" class="button-edit">Edit</a>
                         <form th:action="@{'/lapangan/delete/' + ${lapangan.id}}" method="post" style="display:inline;">
-                            <button type="submit" onclick="return confirm('Yakin hapus?')"
-                                class="button-delete">Delete</button>
+                            <button type="submit" onclick="return confirm('Yakin hapus?')" class="button-delete">Delete</button>
                         </form>
                     </td>
                 </tr>
             </tbody>
         </table>
-
     </div>
+
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal" th:if="${errorMessage}">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p th:text="${errorMessage}"></p>
+        </div>
+    </div>
+
+    <script>
+        function closeModal() {
+            document.getElementById("errorModal").style.display = "none";
+        }
+
+        window.onload = function () {
+            var modal = document.getElementById("errorModal");
+            if (modal) {
+                modal.style.display = "block";
+            }
+        };
+    </script>
 
 </body>
 
