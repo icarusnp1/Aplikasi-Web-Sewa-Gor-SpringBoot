@@ -49,4 +49,16 @@ public class TransaksiController {
         model.addAttribute("user", user); // agar bisa dipakai di navbar_user
         return "user/transaksi";
     }
+
+    @GetMapping("/transaksi")
+    public String transaksiPage(HttpSession session, Model model) {
+        Users user = (Users) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        List<TransaksiEntity> transaksiList = transaksiService.getTransaksiByUser(user);
+        model.addAttribute("transaksis", transaksiList);
+        model.addAttribute("user", user); // agar bisa dipakai di navbar_user
+        return "transaksi/transaksi";
+    }
 }

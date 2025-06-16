@@ -64,7 +64,9 @@ public class BookingController {
 
     // Show create form by lapangan
     @GetMapping("/create/{id_lapangan}")
-    public String showCreateForm(Model model, HttpSession session, @PathVariable("id_lapangan") Integer id_lapangan) {
+    public String showCreateForm(Model model, HttpSession session,
+            @PathVariable("id_lapangan") Integer id_lapangan,
+            @RequestParam(value = "filterDate", required = false) String filterDateStr) {
         Users user = (Users) session.getAttribute("user");
         if (user != null) {
             model.addAttribute("userId", user.getId());
@@ -72,10 +74,17 @@ public class BookingController {
         model.addAttribute("booking", new BookingEntity());
 
         LapanganEntity lapangan = lapanganService.getLapanganById(id_lapangan).orElse(null);
-        model.addAttribute("lapangans", lapangan);
+        model.addAttribute("lapangan", lapangan);
 
-        GorEntity gor = lapangan.getGor();
-        model.addAttribute("id_gor", gor.getId());
+        List<BookingEntity> bookedList;
+        if (filterDateStr != null && !filterDateStr.isEmpty()) {
+            LocalDate filterDate = LocalDate.parse(filterDateStr);
+            bookedList = bookingService.getBookingsByLapanganAndDate(id_lapangan, filterDate);
+            model.addAttribute("filterDate", filterDateStr);
+        } else {
+            bookedList = bookingService.getBookingsByLapangan(id_lapangan);
+        }
+        model.addAttribute("bookedList", bookedList);
 
         return "booking/create";
     }
@@ -167,7 +176,7 @@ public class BookingController {
                 booking.setUser(user);
             } else {
                 redirectAttributes.addFlashAttribute("errorMessage", "Anda harus login untuk membuat booking!");
-                return "redirect:/booking/create";
+                return "redirect:/booking/user/create";
             }
             bookingService.createBooking(booking);
 
@@ -225,9 +234,9 @@ public class BookingController {
     // Handle update booking
     @PostMapping("/update/{id}")
     public String updateBooking(
-        @PathVariable("id") Integer id,
-        @ModelAttribute("booking") BookingEntity bookingDetails,
-        RedirectAttributes redirectAttributes) {
+            @PathVariable("id") Integer id,
+            @ModelAttribute("booking") BookingEntity bookingDetails,
+            RedirectAttributes redirectAttributes) {
         try {
             bookingService.updateBooking(id, bookingDetails);
             redirectAttributes.addFlashAttribute("successMessage", "Booking berhasil diupdate!");

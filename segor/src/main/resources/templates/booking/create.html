@@ -7,7 +7,6 @@
 </head>
 
 <body>
-
     <!-- Modal for error message -->
     <div th:if="${errorMessage}" class="modal" id="errorModal">
         <div class="modal-content alert-danger">
@@ -23,120 +22,241 @@
         </div>
     </div>
 
-    <form th:action="@{/booking/save}" th:object="${booking}" method="post" class="form-container">
-        <h2>Tambah Booking</h2>
-        <div class="form-group">
-            <label for="lapangan">Lapangan:</label>
-            <select th:field="*{lapangan}" id="lapangan" required class="form-input">
-                <option th:each="lapangan : ${lapangans}" th:value="${lapangan.id}" th:text="${lapangan.jenis}">
-                </option>
-            </select>
+    <div class="row">
+        <form th:action="@{/booking/save}" th:object="${booking}" method="post" class="form-container-book"
+            id="bookingForm" style="flex:1;">
+            <h2>Tambah Booking</h2>
+            <div class="form-group">
+                <label for="lapangan">Lapangan:</label>
+                <select th:field="*{lapangan}" id="lapangan" required class="form-input">
+                    <option th:value="${lapangan.id}" th:text="${lapangan.jenis}" selected>
+                    </option>
+                </select>
+            </div>
+            <!-- Harga per jam -->
+            <div class="form-group">
+                <label>Harga per Jam:</label>
+                <span id="hargaPerJam" th:text="${lapangan.tarif}"></span>
+            </div>
+            <div class="form-group">
+                <label for="tanggal">Tanggal:</label>
+                <input type="date" th:field="*{tanggal}" id="tanggal" required class="form-input" />
+            </div>
+            <div class="form-group">
+                <label for="jamMulai">Jam Mulai:</label>
+                <input type="time" th:field="*{jamMulai}" id="jamMulai" required class="form-input" />
+            </div>
+            <div class="form-group">
+                <label for="jamSelesai">Jam Selesai:</label>
+                <input type="time" th:field="*{jamSelesai}" id="jamSelesai" required class="form-input" />
+            </div>
+            <!-- Total harga -->
+             <div class="row flex-between">
+
+                 <div class="form-group">
+                     <label>Total Harga:</label>
+                     <span id="totalHarga">0</span>
+                 </div>
+                 <!-- Add this after Total Harga in your form -->
+                 <div class="form-group">
+                     <label>Durasi (jam):</label>
+                     <span id="durasiBooking">0</span>
+                 </div>
+
+             </div>
+            <div class="form-group">
+                <label for="promoCode">Kode Promo:</label>
+                <input type="text" id="promoCode" class="form-input" placeholder="Masukkan kode promo">
+                <button type="button" id="cekPromo" class="button" style="margin-left:8px;">Cek Promo</button>
+            </div>
+            <div class="form-group">
+                <label>Nilai Promo:</label>
+                <span id="nilaiPromo">0</span>
+            </div>
+            <div class="form-group">
+                <label>Total Setelah Promo:</label>
+                <span id="totalSetelahPromo">0</span>
+            </div>
+            <div class="form-group" style="text-align:center;">
+                <img src="/images/QR.jpg" alt="QR Code"
+                    style="width:180px;height:180px;display:block;margin:0 auto 10px auto;" />
+                <button type="button" id="btnCeklis" class="button" style="margin-top:10px;">&#10003; Ceklis</button>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="button-disabled" id="btnSimpan" disabled>Simpan</button>
+                <input type="hidden" name="promoId" id="promoIdHidden" />
+                <a th:href="@{'/lapangan/list/gor/' + ${lapangan.gor.id}}" class="button-back">Kembali ke Daftar
+                    Booking</a>
+            </div>
+        </form>
+        <!-- Tabel Jadwal Booking -->
+        <div class="form-container-book">
+            <h3 style="text-align:center; color:#2c3e50; margin-bottom:18px;">Jadwal Sudah Dibooking</h3>
+            <!-- Filter tanggal -->
+            <form th:action="@{/booking/create/{id_lapangan}(id_lapangan=${lapangan.id})}" method="get"
+                style="margin-bottom:12px; text-align:center;">
+                <input type="date" name="filterDate" th:value="${filterDate}"
+                    style="padding:4px 8px; border-radius:4px; border:1px solid #ccc;" />
+                <button type="submit" class="button" style="padding:4px 12px; font-size:0.95em;">Filter</button>
+                <a th:if="${filterDate != null}"
+                    th:href="@{/booking/create/{id_lapangan}(id_lapangan=${lapangan.id})}" class="button-back"
+                    style="margin-left:8px;">Reset</a>
+            </form>
+            <!-- Info tanggal filter -->
+            <div th:if="${filterDate != null}" style="text-align:center; margin-bottom:8px; color:#2980b9;">
+                Menampilkan booking untuk tanggal: <b th:text="${filterDate}"></b>
+            </div>
+            <table
+                style="width:100%; border-collapse:collapse; background:#f8f9fa; border-radius:8px; box-shadow:0 2px 8px #0001;">
+                <thead>
+                    <tr style="background:#3498db; color:#fff;">
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">Tanggal</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">00:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">01:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">02:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">03:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">04:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">05:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">06:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">07:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">08:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">09:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">10:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">11:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">12:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">13:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">14:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">15:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">16:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">17:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">18:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">19:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">20:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">21:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">22:00</th>
+                        <th style="border-bottom:2px solid #2980b9; padding:8px;">23:00</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(bookedList)}">
+                        <td colspan="3" style="text-align:center; color:#888; padding:16px;">Belum ada booking</td>
+                    </tr>
+                    <tr th:each="b,iter : ${bookedList}" th:class="${iter.index % 2 == 0} ? 'even-row' : 'odd-row'"
+                        style="transition:background 0.2s;">
+                        <td th:text="${b.tanggal}" style="padding:8px; text-align:center;"></td>
+                        <td th:each="jam : ${#numbers.sequence(0, 23)}"
+                            th:text="${b.isHourBooked(jam)} ? ''"
+                            style="padding:8px; text-align:center; background-color:lightgray;"
+                            th:classappend="${b.isHourBooked(jam)} ? 'booked' : ''"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <style>
+                .even-row {
+                    background: #eaf6fb;
+                }
+
+                .odd-row {
+                    background: #fff;
+                }
+
+                .form-container table tr:hover {
+                    background: #d1ecf1 !important;
+                }
+            </style>
+            <div style="color:red; font-size:12px; margin-top:10px;" th:if="${#lists.isEmpty(bookedList)}">
+                <span th:text="'DEBUG: bookedList kosong atau tidak dikirim dari controller.'"></span>
+            </div>
         </div>
-        <!-- Harga per jam -->
-        <div class="form-group">
-            <label>Harga per Jam:</label>
-            <span id="hargaPerJam"></span>
-        </div>
-        <div class="form-group">
-            <label for="tanggal">Tanggal:</label>
-            <input type="date" th:field="*{tanggal}" id="tanggal" required class="form-input" />
-        </div>
-        <div class="form-group">
-            <label for="jamMulai">Jam Mulai:</label>
-            <input type="time" th:field="*{jamMulai}" id="jamMulai" required class="form-input" />
-        </div>
-        <div class="form-group">
-            <label for="jamSelesai">Jam Selesai:</label>
-            <input type="time" th:field="*{jamSelesai}" id="jamSelesai" required class="form-input" />
-        </div>
-        <div class="form-group">
-            <label for="promoCode">Kode Promo:</label>
-            <input type="text" id="promoCode" class="form-input" placeholder="Masukkan kode promo">
-            <button type="button" id="cekPromo" class="button" style="margin-left:8px;">Cek Promo</button>
-        </div>
-        <div class="form-group">
-            <label>Nilai Promo:</label>
-            <span id="nilaiPromo">0</span>
-        </div>
-        <div class="form-group">
-            <label>Total Harga:</label>
-            <span id="totalHarga">0</span>
-        </div>
-        <div class="form-group">
-            <label>Total Setelah Promo:</label>
-            <span id="totalSetelahPromo">0</span>
-        </div>
-        <div class="form-actions">
-            <button type="submit" class="button">Simpan</button>
-            <a th:href="@{'/booking/list'}" class="button-back">Kembali ke Booking</a>
-        </div>
-    </form>
-    <script th:inline="javascript">
+    </div>
+    <script>
         // Auto show modal if present (optional, for accessibility)
-        window.onload = function() {
+        window.onload = function () {
             var errorModal = document.getElementById('errorModal');
             var successModal = document.getElementById('successModal');
             if (errorModal) errorModal.style.display = 'block';
             if (successModal) successModal.style.display = 'block';
         }
-        
-        const lapanganSelect = document.getElementById('lapangan');
-        const hargaPerJamSpan = document.getElementById('hargaPerJam');
-        let lapanganTarifMap = {};
-        /*[# th:each="lapangan : ${lapangans}"]*/
-        lapanganTarifMap['[[${lapangan.id}]]'] = [[${lapangan.tarif}]];
-        /*[/]*/
 
-        function updateHargaPerJam() {
-            const id = lapanganSelect.value;
-            hargaPerJamSpan.textContent = lapanganTarifMap[id] || 0;
-            hitungTotalHarga();
-        }
-        lapanganSelect.addEventListener('change', updateHargaPerJam);
-        window.addEventListener('DOMContentLoaded', updateHargaPerJam);
+        const btnCeklis = document.getElementById('btnCeklis');
+        const btnSimpan = document.getElementById('btnSimpan');
+        let ceklisClicked = false;
 
-        // Promo
-        let promoList = [];
-        let promoValue = 0;
+        // Pastikan tombol simpan selalu disable saat halaman dimuat
+        btnSimpan.disabled = true;
 
-        fetch('/promo/list/json')
-            .then(response => response.json())
-            .then(data => {
-                promoList = data;
-            });
-
-        function cariPromo(kode) {
-            return promoList.find(p => p.kode && p.kode.toLowerCase() === kode.toLowerCase());
-        }
-
-        document.getElementById('cekPromo').addEventListener('click', function () {
-            const kode = document.getElementById('promoCode').value.trim();
-            const promo = cariPromo(kode);
-            if (promo) {
-                promoValue = promo.totalPromo;
-                document.getElementById('nilaiPromo').textContent = promoValue;
-            } else {
-                promoValue = 0;
-                document.getElementById('nilaiPromo').textContent = "0";
-                alert("Kode promo tidak valid!");
-            }
-            hitungTotalHarga();
+        btnCeklis.addEventListener('click', function () {
+            btnSimpan.disabled = false;
+            btnSimpan.className = 'button'; // Change class to "button"
+            btnCeklis.style.backgroundColor = '#90ee90'; // hijau muda
+            ceklisClicked = true;
         });
 
+        document.getElementById('bookingForm').addEventListener('submit', function (e) {
+            if (!ceklisClicked) {
+                e.preventDefault();
+                alert("Isi dulu QR lalu tekan ceklis");
+            }
+        });
+
+    let promoList = [];
+    let promoValue = 0;
+
+    // Ambil data promo dari backend
+    fetch('/promo/list/json')
+        .then(response => response.json())
+        .then(data => {
+            promoList = data;
+        });
+
+    function cariPromo(kode) {
+        return promoList.find(p => p.kode && p.kode.toLowerCase() === kode.toLowerCase());
+    }
+
+    document.getElementById('cekPromo').addEventListener('click', function () {
+        const kode = document.getElementById('promoCode').value.trim();
+        const promo = cariPromo(kode);
+        if (promo) {
+            promoValue = promo.totalPromo;
+            document.getElementById('nilaiPromo').textContent = promoValue;
+            document.getElementById('promoIdHidden').value = promo.id; // Set id promo ke input hidden
+        } else {
+            promoValue = 0;
+            document.getElementById('nilaiPromo').textContent = "0";
+            document.getElementById('promoIdHidden').value = ""; // Kosongkan jika tidak valid
+            alert("Kode promo tidak valid!");
+        }
+        hitungTotalHarga();
+    });
+
+        // Hitung total harga booking
         function hitungTotalHarga() {
-            const hargaPerJam = parseInt(hargaPerJamSpan.textContent) || 0;
+            const hargaPerJam = parseInt(document.getElementById('hargaPerJam').textContent) || 0;
             const jamMulai = document.getElementById('jamMulai').value;
             const jamSelesai = document.getElementById('jamSelesai').value;
             let total = 0;
+            let durasi = 0;
             if (jamMulai && jamSelesai) {
                 const [mulaiJam, mulaiMenit] = jamMulai.split(':').map(Number);
                 const [selesaiJam, selesaiMenit] = jamSelesai.split(':').map(Number);
-                let durasi = (selesaiJam + selesaiMenit / 60) - (mulaiJam + mulaiMenit / 60);
+                durasi = (selesaiJam + selesaiMenit / 60) - (mulaiJam + mulaiMenit / 60);
                 if (durasi > 0) {
                     total = Math.round(durasi * hargaPerJam);
+                } else {
+                    durasi = 0;
                 }
             }
             document.getElementById('totalHarga').textContent = total;
+            // Format durasi ke jam dan menit (HH:mm)
+            let durasiText = "0";
+            if (durasi > 0) {
+                const jam = Math.floor(durasi);
+                const menit = Math.round((durasi - jam) * 60);
+                durasiText = jam.toString().padStart(2, '0') + ":" + menit.toString().padStart(2, '0');
+            }
+            document.getElementById('durasiBooking').textContent = durasiText;
+
+            // Hitung total setelah promo
             let totalSetelahPromo = total - promoValue;
             if (totalSetelahPromo < 0) totalSetelahPromo = 0;
             document.getElementById('totalSetelahPromo').textContent = totalSetelahPromo;
@@ -145,7 +265,6 @@
         document.getElementById('jamMulai').addEventListener('change', hitungTotalHarga);
         document.getElementById('jamSelesai').addEventListener('change', hitungTotalHarga);
     </script>
-
 </body>
 
 </html>

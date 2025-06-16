@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Transaksi Saya</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: #f7fafc; /* Light background */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h2 {
+            text-align: center;
+            color: #1a202c; /* Dark text color */
+            margin-bottom: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background-color: #1a202c; /* Dark background for header */
+            color: white;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0; /* Light border */
+        }
+
+        tbody tr:hover {
+            background-color: #edf2f7; /* Light gray on hover */
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f7fafc; /* Light background for even rows */
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #ffffff; /* White background for odd rows */
+        }
+
+        td {
+            color: #4a5568; /* Dark text color for table data */
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="fragments/navbar :: main-navbar('transaksi')"></div>
+    <div class="container">
+        <h2>Transaksi Saya</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>GOR</th>
+                    <th>Tanggal</th>
+                    <th>Durasi (jam)</th>
+                    <th>Promo</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="trx, iterStat : ${transaksis}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${trx.gor.nama}"></td>
+                    <td th:text="${trx.tanggal != null ? #temporals.format(trx.tanggal, 'dd-MM-yyyy HH:mm') : '-'}"></td>
+                    <td th:text="${trx.durasi}"></td>
+                    <td th:text="${trx.promo != null ? trx.promo.totalPromo : '-'}"></td>
+                    <td th:text="${trx.status}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
